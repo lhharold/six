@@ -1,0 +1,14 @@
+!*.cpp
+!*.h
+!*.md
+!*.sln
+!*.vcproj
+
+
+pro/vc/Debug
+bin/data
+six/export/lib
+six/export/lib
+*.user
+*.ncb
+*.suo
