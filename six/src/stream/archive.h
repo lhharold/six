@@ -26,32 +26,6 @@ namespace six {
 	protected:
 		String mName;
 		bool mReadonly;
-#if 0
-		virtual void*	getHandle() = 0;
-		virtual u32		getLength() = 0;
-		virtual u32		getCurPos() = 0;
-		virtual void	setCurPos(s32 pos) = 0;
-		virtual void	seekOffset(s32 offset) = 0;
-
-		virtual char	readChar() = 0;
-		virtual short	readShort() = 0;
-		virtual int		readInt() = 0;
-		virtual s64		readInt64() = 0;
-		virtual float	readFloat() = 0;
-		virtual double	readDouble() = 0;
-		virtual int		readBuffer(void* buffer, int size) = 0;
-		virtual int		readString(char* str, int size) = 0;
-
-		virtual void	writeChar(char val) = 0;
-		virtual void	writeShort(short val) = 0;
-		virtual void	writeInt(int val) = 0;
-		virtual void	writeInt64(s64 val) = 0;
-		virtual void	writeFloat(float val) = 0;
-		virtual void	writeDouble(double val) = 0;
-		virtual void	writeBuffer(void* buffer, int size) = 0;
-		virtual void	writeBufferAlign(void* buffer, int size, int align) = 0;
-		virtual void	writeString(const char* str) = 0;
-#endif
 	};
 }
 

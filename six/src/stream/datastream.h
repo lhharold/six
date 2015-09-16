@@ -1,6 +1,6 @@
 #ifndef __SIX_DATASTREAM_H_INCLUDE__
 #define __SIX_DATASTREAM_H_INCLUDE__
-#include "define.h"
+
 namespace six {
 	class IDataStream {
 	public:
@@ -9,13 +9,9 @@ namespace six {
 			WRITE = 2,
 		};
 		IDataStream(u8 accessMode = READ) : mName(NULL), mSize(0), mAccess(accessMode) {}
-		IDataStream(const char* name, u8 accessMode = READ) : mSize(0), mAccess(accessMode) {
-			u32 len = strlen(name);
-			mName = NEW char[len+1];
-			STRCPY(mName, name);
+		IDataStream(const char* name, u8 accessMode = READ) : mName(name), mSize(0), mAccess(accessMode) {
 		}
 		virtual ~DataStream() {
-			SAFE_DEL(mName);
 		}
 
 		virtual u32  read(void* buff, u32 size) = 0;
@@ -31,8 +27,35 @@ namespace six {
 		u32  size() {return mSize;}
 		bool isReadable() const {return (mAccess & READ) != 0;}
 		bool isWriteable() const {return (mAccess & WRITE} != 0;}
+
+#if 0
+		virtual void*	getHandle() = 0;
+		virtual u32		getLength() = 0;
+		virtual u32		getCurPos() = 0;
+		virtual void	setCurPos(s32 pos) = 0;
+		virtual void	seekOffset(s32 offset) = 0;
+
+		virtual char	readChar() = 0;
+		virtual short	readShort() = 0;
+		virtual int		readInt() = 0;
+		virtual s64		readInt64() = 0;
+		virtual float	readFloat() = 0;
+		virtual double	readDouble() = 0;
+		virtual int		readBuffer(void* buffer, int size) = 0;
+		virtual int		readString(char* str, int size) = 0;
+
+		virtual void	writeChar(char val) = 0;
+		virtual void	writeShort(short val) = 0;
+		virtual void	writeInt(int val) = 0;
+		virtual void	writeInt64(s64 val) = 0;
+		virtual void	writeFloat(float val) = 0;
+		virtual void	writeDouble(double val) = 0;
+		virtual void	writeBuffer(void* buffer, int size) = 0;
+		virtual void	writeBufferAlign(void* buffer, int size, int align) = 0;
+		virtual void	writeString(const char* str) = 0;
+#endif
 	protected:
-		const char* mName;
+		String		mName;
 		u32			mSize;
 		u8			mAccess;
 	};
