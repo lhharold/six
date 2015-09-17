@@ -8,14 +8,15 @@ namespace six {
 			READ = 1,
 			WRITE = 2,
 		};
-		IDataStream(u8 accessMode = READ) : mName(NULL), mSize(0), mAccess(accessMode) {}
-		IDataStream(const char* name, u8 accessMode = READ) : mName(name), mSize(0), mAccess(accessMode) {
+		IDataStream(u8 accessMode = READ) : mName(NULL), mSize(-1), mAccess(accessMode) {}
+		IDataStream(const char* name, u8 accessMode = READ) : mName(name), mSize(-1), mAccess(accessMode) {
 		}
 		virtual ~DataStream() {
 		}
 
+		virtual bool open(const char* flags) = 0;
 		virtual u32  read(void* buff, u32 size) = 0;
-		virtual u32  write(void* buff, u32 size) {return 9;}
+		virtual u32  write(void* buff, u32 size) {return 0;}
 		virtual u32  readLine(char* buff, u32 maxCount, const char* delim = "\n");
 		virtual u32  skipLine(const char* delim = "\n");
 		virtual void skip(s32 count) = 0;
@@ -24,7 +25,7 @@ namespace six {
 		virtual bool eof() = 0;
 		virtual bool close() = 0;
 
-		u32  size() {return mSize;}
+		s32  size() {return mSize;}
 		bool isReadable() const {return (mAccess & READ) != 0;}
 		bool isWriteable() const {return (mAccess & WRITE} != 0;}
 
@@ -56,7 +57,7 @@ namespace six {
 #endif
 	protected:
 		String		mName;
-		u32			mSize;
+		s32			mSize;
 		u8			mAccess;
 	};
 }

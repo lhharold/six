@@ -63,6 +63,14 @@ namespace six {
 	#define MEMCPY memcpy
 	#define STRCPY strcpy
 
+	#define FOPEN	fopen
+	#define FREAD	fread
+	#define FTELL	ftell
+	#define FSEEK	fseek
+	#define FWRITE	fwrite
+	#define FCLOSE	fclose
+
+
 	#define ASSERT assert
 
 	typedef string String;

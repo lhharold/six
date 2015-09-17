@@ -156,6 +156,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\six\src\filestream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\filestream.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\stream\filesystem.cpp"
 				>
 			</File>
