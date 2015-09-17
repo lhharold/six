@@ -61,6 +61,7 @@ namespace six {
 	#define SAFE_DEL_ARRAY(p)	do{ if (p) { delete[] (p); (p) = NULL; } }while(0)
 
 	#define MEMCPY memcpy
+	#define STRLEN strlen
 	#define STRCPY strcpy
 
 	#define FOPEN	fopen
@@ -69,11 +70,14 @@ namespace six {
 	#define FSEEK	fseek
 	#define FWRITE	fwrite
 	#define FCLOSE	fclose
-
+	#define FREMOVE remove
+	#define FEOF	feof
 
 	#define ASSERT assert
 
 	typedef string String;
 }
+
+#pragma warning(disable: 4996)
 
 #endif //__SIX_DEFINE_H_INCLUDE__

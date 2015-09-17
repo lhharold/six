@@ -22,7 +22,7 @@ namespace six {
 		virtual u32 getModifiedTime(const char* filename) = 0;
 
 		const char* getName() const {return mName.c_str();}
-		bool isReadonly()const {return mReadonly;}
+		bool isReadOnly()const {return mReadonly;}
 	protected:
 		String mName;
 		bool mReadonly;

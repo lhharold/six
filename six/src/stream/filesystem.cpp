@@ -37,141 +37,82 @@ namespace six {
 	void FileSystem::load() {
 #if 0
 		LOCK_AUTO_MUTEX
-
-        // test to see if this folder is writeable
-		String testPath = concatenate_path(mName, "__testwrite.six");
-		std::ofstream writeStream;
-		writeStream.open(testPath.c_str());
-		if (writeStream.fail())
-			mReadOnly = true;
-		else
-		{
-			mReadOnly = false;
-			writeStream.close();
-			::remove(testPath.c_str());
-		}
 #endif
+		//test to see if this folder is writeable
+		String testPath = concatenate_path(mName, "__testwrite.six");
+		FileStream fStream(testPath.c_str());
+		if(fStream.open("wb")) {
+			mReadonly = true;
+		} else {
+			mReadonly = false;
+			fStream.close();
+			FREMOVE(testPath.c_str());
+		}
 	}
 	void FileSystem::unload() {
 	}
 	IDataStream* FileSystem::open(const char* filename, bool readonly/* = true*/) const {
-#if 0
 		String full_path = concatenate_path(mName, filename);
-
 		// Use filesystem to determine size 
 		// (quicker than streaming to the end and back)
 		struct stat tagStat;
 		int ret = stat(full_path.c_str(), &tagStat);
-		assert(ret == 0 && "Problem getting file size" );
-        (void)ret;  // Silence warning
+		ASSERT(ret == 0 && "Problem getting file size" );
 
-		// Always open in binary mode
-		// Also, always include reading
-		std::ios::openmode mode = std::ios::in | std::ios::binary;
-		std::istream* baseStream = 0;
-		std::ifstream* roStream = 0;
-		std::fstream* rwStream = 0;
-
-		if (!readonly && isReadonly()) {
-			mode |= std::ios::out;
-			rwStream = NEW_T(std::fstream, MEMCATEGORY_GENERAL)();
-			rwStream->open(full_path.c_str(), mode);
-			baseStream = rwStream;
+		// Always open in binary mode and reading
+		const char* flags = "rb";
+		FileStream* fStream = NEW FileStream(full_path.c_str(), (s32)tagStat.st_size);
+		bool opened = false;
+		if (!readonly && isReadOnly()) {
+			opened = fStream->open("r+b");
 		} else {
-			roStream = NEW_T(std::ifstream, MEMCATEGORY_GENERAL)();
-			roStream->open(full_path.c_str(), mode);
-			baseStream = roStream;
+			opened = fStream->open("rb");
 		}
 
-		// Should check ensure open succeeded, in case fail for some reason.
-		if (baseStream->fail()) {
-			DELETE_T(roStream, basic_ifstream, MEMCATEGORY_GENERAL);
-			DELETE_T(rwStream, basic_fstream, MEMCATEGORY_GENERAL);
-			EXCEPT(Exception::ERR_FILE_NOT_FOUND,
-				"Cannot open file: " + filename,
-				"FileSystemArchive::open");
+		if(!opened) {
+			ASSERT(0 && "FileSystem::open - Cannot open file");
+			int error = fStream->getError();
+			(void)error;
+			SAFE_DEL(fStream);
 		}
-
-		/// Construct return stream, tell it to delete on destroy
-		FileStream* stream = 0;
-		if (rwStream) {
-			// use the writeable stream 
-			stream = NEW FileStream(filename, rwStream, (size_t)tagStat.st_size, true);
-		} else {
-			// read-only stream
-			stream = NEW FileStream(filename, roStream, (size_t)tagStat.st_size, true);
-		}
-		return stream;
-#else 
-		return NULL;
-#endif
+		return fStream;
 	}
 	u32 FileSystem::getModifiedTime(const char* filename) {
-#if 0
 		String full_path = concatenate_path(mName, filename);
-
 		struct stat tagStat;
 		bool ret = (stat(full_path.c_str(), &tagStat) == 0);
-
 		if (ret) {
 			return tagStat.st_mtime;
 		}
 		return 0;
-#else
-		return 0;
-#endif
 	}
 	IDataStream* FileSystem::create(const char* filename) const {
-#if 0
 		if (isReadOnly()) {
-			EXCEPT(Exception::ERR_INVALIDPARAMS, 
-				"Cannot create a file in a read-only archive", 
-				"FileSystemArchive::remove");
+			ASSERT(0 && "FileSystem::create - Cannot create a file in a read-only archive");
+			return NULL;
 		}
-
 		String full_path = concatenate_path(mName, filename);
-
-		// Always open in binary mode
-		// Also, always include reading
-		std::ios::openmode mode = std::ios::out | std::ios::binary;
-		std::fstream* rwStream = NEW_T(std::fstream, MEMCATEGORY_GENERAL)();
-		rwStream->open(full_path.c_str(), mode);
-
-		// Should check ensure open succeeded, in case fail for some reason.
-		if (rwStream->fail())
-		{
-			DELETE_T(rwStream, basic_fstream, MEMCATEGORY_GENERAL);
-			EXCEPT(Exception::ERR_FILE_NOT_FOUND,
-				"Cannot open file: " + filename,
-				"FileSystemArchive::create");
+		// Always open in binary mode and reading
+		FileStream* fStream = NEW FileStream(full_path.c_str());
+		bool opened = fStream->open("w+b");
+		if (opened) {
+			ASSERT(0 && "FileSystem::create - Cannot open file");
+			SAFE_DEL(fStream);
 		}
-
-		/// Construct return stream, tell it to delete on destroy
-		FileStream* stream = NEW FileStream(filename, rwStream, 0, true);
-
-		return stream;
-#else
-		return NULL;
-#endif
+		return fStream;
 	}
 	void FileSystem::remove(const char* filename) const {
-#if 0
-		if (isReadonly()) {
-			EXCEPT(Exception::ERR_INVALIDPARAMS, 
-				"Cannot remove a file from a read-only archive", 
-				"FileSystemArchive::remove");
+		if (isReadOnly()) {
+			ASSERT(0 && "FileSystemArchive::remove - Cannot remove a file from a read-only archive");
+			return;
 		}
 		String full_path = concatenate_path(mName, filename);
-		::remove(full_path.c_str());
-#endif
+		FREMOVE(full_path.c_str());
 	}
 	bool FileSystem::exists(const char* filename) {
-#if 0
         String full_path = concatenate_path(mName, filename);
-
         struct stat tagStat;
         bool ret = (stat(full_path.c_str(), &tagStat) == 0);
-
 		// stat will return true if the filename is absolute, but we need to check
 		// the file is actually in this archive
         if (ret && is_absolute_path(filename.c_str())) {
@@ -186,11 +127,7 @@ namespace six {
 			ret = tringUtil::startsWith(full_path, mName, false);
 #endif
 		}
-
 		return ret;
-#else
-		return false;
-#endif
 	}
 
 }
