@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\stream"
+				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -156,11 +156,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\six\src\filestream.cpp"
+				RelativePath="..\..\six\src\stream\filestream.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\six\src\filestream.h"
+				RelativePath="..\..\six\src\stream\filestream.h"
 				>
 			</File>
 			<File
@@ -172,10 +172,26 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\six\src\define.h"
+		<Filter
+			Name="core"
 			>
-		</File>
+			<File
+				RelativePath="..\..\six\src\core\core.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\define.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\stringutil.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\stringutil.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\six\src\six.h"
 			>

@@ -1,5 +1,6 @@
-#include "define.h"
-#include "filesystem.h"
+#include "core.h"
+
+#include <sys/stat.h>
 
 namespace six {
 
@@ -53,13 +54,10 @@ namespace six {
 	}
 	IDataStream* FileSystem::open(const char* filename, bool readonly/* = true*/) const {
 		String full_path = concatenate_path(mName, filename);
-		// Use filesystem to determine size 
-		// (quicker than streaming to the end and back)
 		struct stat tagStat;
 		int ret = stat(full_path.c_str(), &tagStat);
 		ASSERT(ret == 0 && "Problem getting file size" );
 
-		// Always open in binary mode and reading
 		const char* flags = "rb";
 		FileStream* fStream = NEW FileStream(full_path.c_str(), (s32)tagStat.st_size);
 		bool opened = false;
@@ -82,7 +80,7 @@ namespace six {
 		struct stat tagStat;
 		bool ret = (stat(full_path.c_str(), &tagStat) == 0);
 		if (ret) {
-			return tagStat.st_mtime;
+			return (u32)tagStat.st_mtime;
 		}
 		return 0;
 	}
@@ -92,7 +90,6 @@ namespace six {
 			return NULL;
 		}
 		String full_path = concatenate_path(mName, filename);
-		// Always open in binary mode and reading
 		FileStream* fStream = NEW FileStream(full_path.c_str());
 		bool opened = fStream->open("w+b");
 		if (opened) {
@@ -113,21 +110,15 @@ namespace six {
         String full_path = concatenate_path(mName, filename);
         struct stat tagStat;
         bool ret = (stat(full_path.c_str(), &tagStat) == 0);
-		// stat will return true if the filename is absolute, but we need to check
-		// the file is actually in this archive
-        if (ret && is_absolute_path(filename.c_str())) {
-			// only valid if full path starts with our base
+        if (ret && is_absolute_path(filename)) {
 #if OS_PLATFORM == OS_PLATFORM_WIN32
-			// case insensitive on windows
 			String lowerCaseName = mName;
 			StringUtil::toLowerCase(lowerCaseName);
 			ret = StringUtil::startsWith(full_path, lowerCaseName, true);
 #else
-			// case sensitive
-			ret = tringUtil::startsWith(full_path, mName, false);
+			ret = StringUtil::startsWith(full_path, mName, false);
 #endif
 		}
 		return ret;
 	}
-
 }

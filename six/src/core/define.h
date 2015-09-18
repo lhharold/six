@@ -26,10 +26,17 @@
 // c/c++ standard lib include
 #include <stdio.h>
 #include <stdlib.h>
-#include <string>
 #include <assert.h>
 
+//temp using std
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <map>
+
 using std::string;
+using std::vector;
+using std::map;
 
 namespace six {
 	typedef unsigned char		u8;

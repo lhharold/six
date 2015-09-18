@@ -1,5 +1,4 @@
-#include "define.h"
-#include "filestream.h"
+#include "core.h"
 
 namespace six {
 
@@ -13,9 +12,9 @@ namespace six {
 	FileStream::FileStream(const char* name, s32 size)
 		: IDataStream(name)
 		, mFile(NULL)
-		, mSize(size)
 		, mError(FILE_ERROR_NO_ERROR)
 	{
+		mSize = size;
 	}
 
 	FileStream::~FileStream() {
