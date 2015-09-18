@@ -5,7 +5,7 @@ namespace six {
 	class IDataStream;
 	class Archive {
 	public:
-		Archive(const char* name) : mName(name), mReadonly(false) {}
+		Archive(const char* name) : mName(name), mReadonly(true) {}
 		virtual ~Archive() {}
 		virtual bool isCaseSensitive() const = 0;
 		virtual void load() = 0;

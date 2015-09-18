@@ -70,7 +70,6 @@ namespace six {
 	#define MEMCPY memcpy
 	#define STRLEN strlen
 	#define STRCPY strcpy
-	#define STRCHR strchr
 
 	#define FOPEN	fopen
 	#define FREAD	fread
@@ -78,7 +77,7 @@ namespace six {
 	#define FSEEK	fseek
 	#define FWRITE	fwrite
 	#define FCLOSE	fclose
-	#define FREMOVE ::remove
+	#define FREMOVE remove
 	#define FEOF	feof
 
 	#define ASSERT assert

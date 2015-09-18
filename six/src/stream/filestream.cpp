@@ -21,6 +21,20 @@ namespace six {
 		close();
 	}
 
+	void FileStream::determineAccess(const char* flags) {
+		mAccess = 0;
+		if(STRCHR(flags, '+')) {
+			mAccess |= READ;
+			mAccess |= WRITE;
+		} else {
+			if(STRCHR(flags, 'r') != NULL) {
+				mAccess |= READ;
+			} else {
+				mAccess |= WRITE;
+			}
+		}
+	}
+
 	bool FileStream::open(const char* flags) {
 		if(mFile != NULL) {
 			mError = FILE_ERROR_OPENED;
@@ -41,6 +55,8 @@ namespace six {
 			}
 			FSEEK((FILE*)mFile, 0, SEEK_SET);
 		}
+
+		determineAccess(flags);
 		return true;
 	}
 

@@ -3,6 +3,7 @@
 !*.md
 !*.sln
 !*.vcproj
+!*.glsl
 
 
 pro/vc/Debug

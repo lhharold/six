@@ -42,7 +42,7 @@ namespace six {
 		//test to see if this folder is writeable
 		String testPath = concatenate_path(mName, "__testwrite.six");
 		FileStream fStream(testPath.c_str());
-		if(fStream.open("wb")) {
+		if(!fStream.open("wb")) {
 			mReadonly = true;
 		} else {
 			mReadonly = false;
@@ -61,8 +61,8 @@ namespace six {
 		const char* flags = "rb";
 		FileStream* fStream = NEW FileStream(full_path.c_str(), (s32)tagStat.st_size);
 		bool opened = false;
-		if (!readonly && isReadOnly()) {
-			opened = fStream->open("r+b");
+		if (!readonly && !isReadOnly()) {
+			opened = fStream->open("rb+");
 		} else {
 			opened = fStream->open("rb");
 		}
@@ -92,7 +92,7 @@ namespace six {
 		String full_path = concatenate_path(mName, filename);
 		FileStream* fStream = NEW FileStream(full_path.c_str());
 		bool opened = fStream->open("w+b");
-		if (opened) {
+		if (!opened) {
 			ASSERT(0 && "FileSystem::create - Cannot open file");
 			SAFE_DEL(fStream);
 		}
