@@ -1,13 +1,15 @@
 !*.cpp
 !*.h
 !*.md
-!*.sln
-!*.vcproj
+
+bin/data
 !*.glsl
 
-
+pro/vc
+!*.sln
+!*.vcproj
 pro/vc/Debug
-bin/data
+
 six/export/lib
 six/export/lib
 *.user

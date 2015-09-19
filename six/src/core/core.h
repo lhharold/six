@@ -9,4 +9,9 @@
 #include "filestream.h"
 #include "filesystem.h"
 
+#include "rendersystem.h"
+#include "gl/glrendersystem.h"
+
+#include "root.h"
+
 #endif //__SIX_CORE_H_INCLUDE__

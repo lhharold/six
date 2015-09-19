@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream"
+				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -184,6 +184,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\root.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\root.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\stringutil.cpp"
 				>
 			</File>
@@ -191,6 +199,54 @@
 				RelativePath="..\..\six\src\core\stringutil.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="utility"
+			>
+			<File
+				RelativePath="..\..\six\src\utility\console.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\utility\console.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="render"
+			>
+			<File
+				RelativePath="..\..\six\src\render\rendersystem.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\rendersystem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\renderwindow.h"
+				>
+			</File>
+			<Filter
+				Name="gl"
+				>
+				<File
+					RelativePath="..\..\six\src\render\gl\glrendersystem.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\render\gl\glrendersystem.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\render\gl\glsupport.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\render\gl\glsupport.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\..\six\src\six.h"

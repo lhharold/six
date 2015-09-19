@@ -1,5 +1,5 @@
-#ifndef __SIX_STRING_H__
-#define __SIX_STRING_H__
+#ifndef __SIX_STRING_H_INCLUDE__
+#define __SIX_STRING_H_INCLUDE__
 
 namespace six {
 
@@ -42,4 +42,4 @@ namespace six {
 	};
 }
 
-#endif //
+#endif //__SIX_STRING_H_INCLUDE__

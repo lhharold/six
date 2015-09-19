@@ -91,7 +91,7 @@ namespace six {
 		}
 		String full_path = concatenate_path(mName, filename);
 		FileStream* fStream = NEW FileStream(full_path.c_str());
-		bool opened = fStream->open("w+b");
+		bool opened = fStream->open("wb+");
 		if (!opened) {
 			ASSERT(0 && "FileSystem::create - Cannot open file");
 			SAFE_DEL(fStream);
