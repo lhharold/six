@@ -6,4 +6,8 @@ namespace six {
 
 	RenderSystem::~RenderSystem() {
 	}
+
+	void RenderSystem::attachRenderTarget(RenderTarget& target) {
+        mRenderTargets.insert(target.getName(), &target);
+	}
 }

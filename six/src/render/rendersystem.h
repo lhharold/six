@@ -19,6 +19,11 @@ namespace six {
 		virtual RenderWindow* startup(bool autoWindow, const char* windowName) = 0;
 		virtual RenderWindow* createWindow(const char* windowName, u32 width, u32 height, bool fullScreen) = 0;
 		virtual void shutdown() = 0;
+		
+		virtual void attachRenderTarget(RenderTarget& target);
+	protected:
+		typedef Map<String, RenderTarget*> RenderTargetMap;
+		RenderTargetMap mRenderTargets;
 	};
 }
 #endif //__SIX_RENDERSYSTEM_H_INCLUDE__
