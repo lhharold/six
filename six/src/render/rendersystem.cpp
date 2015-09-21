@@ -7,7 +7,8 @@ namespace six {
 	RenderSystem::~RenderSystem() {
 	}
 
-	void RenderSystem::attachRenderTarget(RenderTarget& target) {
-        mRenderTargets.insert(target.getName(), &target);
+	void RenderSystem::attachRenderTarget(const RenderTarget* target) {
+		ASSERT(target);
+		mRenderTargets.insert(std::pair<String, const RenderTarget*>(target->getName(), target));
 	}
 }

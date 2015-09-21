@@ -6,13 +6,13 @@
 namespace six {
 	class Root {
 	public:
-		Root(RenderSystemType type);
+		Root();
 		~Root();
 		RenderWindow* startup(bool autoWindow, const char* windowName = "Auto Window");
 		RenderWindow* createWindow(const char* name, s32 width, s32 height, bool fullScreen = false);
 		void shutdown();
 	protected:
-		RenderSystem* _createRenderSystem(RenderSystemType type);
+		RenderSystem* _createRenderSystem();
 
 		RenderSystem* mRender;
 		RenderWindow* mAutoWindow;

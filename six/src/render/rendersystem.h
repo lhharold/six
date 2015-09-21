@@ -5,12 +5,6 @@
 
 namespace six {
 
-	enum RenderSystemType {
-		RST_GL = 0,
-		RST_GLES,
-		RST_GLES20,
-	};
-
 	class RenderSystem {
 	public:
 		RenderSystem();
@@ -20,9 +14,9 @@ namespace six {
 		virtual RenderWindow* createWindow(const char* windowName, u32 width, u32 height, bool fullScreen) = 0;
 		virtual void shutdown() = 0;
 		
-		virtual void attachRenderTarget(RenderTarget& target);
+		virtual void attachRenderTarget(const RenderTarget* target);
 	protected:
-		typedef Map<String, RenderTarget*> RenderTargetMap;
+		typedef Map<String, const RenderTarget*> RenderTargetMap;
 		RenderTargetMap mRenderTargets;
 	};
 }

@@ -1,5 +1,14 @@
 #include "core.h"
 #include "glrendersystem.h"
+#include "glrenderwindow.h"
+
+#if RENDER_SYS == RENDER_SYS_GL
+	#pragma comment(lib, "OpenGL32.lib")
+	#if OS_PLATFORM == OS_PLATFORM_WIN32
+		#include "gl/win32/glwin32support.h"
+	#endif
+#endif
+
 
 namespace six {
 	GLRenderSystem::GLRenderSystem() 
@@ -7,17 +16,18 @@ namespace six {
 		, mMainContext(NULL)
 		, mActiveContext(NULL)
 	{
+		mGLSupport = getGLSupport();
 	}
 
 	GLRenderSystem::~GLRenderSystem() {
 	}
 
 	RenderWindow* GLRenderSystem::startup(bool autoWindow, const char* windowName) {
-		mGLSupport.startup();
-		RenderWindow* autoWindow = mGLSupport.createWindow(autoWindow, this, windowName);
+		mGLSupport->startup();
+		GLRenderWindow* window = mGLSupport->createWindow(this, autoWindow, windowName);
 
-		RenderWindow::startup(autoWindow, windowName);
-		return autoWindow;
+		RenderSystem::startup(autoWindow, windowName);
+		return (RenderWindow*)window;
 	}
 
 	RenderWindow* GLRenderSystem::createWindow(const char* windowName, u32 width, u32 height, bool fullScreen) {
@@ -25,15 +35,14 @@ namespace six {
 			ASSERT(0 && "GLRenderSystem::createWindow - Window with name already exists");
 			return NULL;
 		}
-		RenderWindow* window = mGLSupport.createWindow(windowName, width, height, fullScreen);
-		attachRenderTarget(*window);
+		GLRenderWindow* window = mGLSupport->newWindow(windowName, width, height, fullScreen);
+		RenderWindow* baseWindow = (RenderWindow*)window;
+		attachRenderTarget(baseWindow);
 
 		if(!mGLInitialised) {
 			initialiseContext(window);
-
-			mGLSupport.
 		}
-		return window;
+		return baseWindow;
 	}
 
 	void GLRenderSystem::shutdown() {
@@ -41,11 +50,11 @@ namespace six {
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	void GLRenderSystem::initialiseContext(RenderWindow* window) {
+	void GLRenderSystem::initialiseContext(GLRenderWindow* window) {
 		mMainContext = window->getContext();
 		mActiveContext = mMainContext;
 		if(mActiveContext)
 			mActiveContext->active();
-		mGLSupport.initialiseExtensions();
+		mGLSupport->initialiseExtensions();
 	}
 }

@@ -1,12 +1,13 @@
 #ifndef __SIX_RENDERWINDOW_H_INCLUDE__
 #define __SIX_RENDERWINDOW_H_INCLUDE__
 
-namespace six {
-	class RenderWindow {
-	public:
-		RenderWindow() {}
-		virtual ~RenderWindow() {}
+#include "rendertarget.h"
 
+namespace six {
+	class RenderWindow : public RenderTarget {
+	public:
+		RenderWindow(const char* name) : RenderTarget(name) {}
+		virtual ~RenderWindow() {}
 	};
 }
 

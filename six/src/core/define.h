@@ -67,10 +67,14 @@ namespace six {
 	#define SAFE_DEL(p)			do{ if (p) { delete (p); (p) = NULL; } }while(0)
 	#define SAFE_DEL_ARRAY(p)	do{ if (p) { delete[] (p); (p) = NULL; } }while(0)
 
+	#define PRINTF printf
+	#define SSCANF sscanf
+
 	#define MEMCPY memcpy
 	#define STRLEN strlen
 	#define STRCPY strcpy
 	#define STRCHR strchr
+	#define STRSTR strstr
 
 	#define FOPEN	fopen
 	#define FREAD	fread

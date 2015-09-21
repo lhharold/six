@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\six\src\render\rendertarget.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\render\renderwindow.h"
 				>
 			</File>
@@ -231,11 +235,19 @@
 				Name="gl"
 				>
 				<File
+					RelativePath="..\..\six\src\render\gl\glcontext.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\six\src\render\gl\glrendersystem.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\six\src\render\gl\glrendersystem.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\render\gl\glrenderwindow.h"
 					>
 				</File>
 				<File
@@ -246,8 +258,24 @@
 					RelativePath="..\..\six\src\render\gl\glsupport.h"
 					>
 				</File>
+				<Filter
+					Name="win32"
+					>
+					<File
+						RelativePath="..\..\six\src\gl\win32\glwin32support.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\six\src\gl\win32\glwin32support.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath="..\..\six\src\buildsetting.h"
+			>
+		</File>
 		<File
 			RelativePath="..\..\six\src\six.h"
 			>

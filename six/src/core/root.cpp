@@ -1,12 +1,13 @@
 #include "core.h"
+#include "gl/glrendersystem.h"
 
 namespace six {
 
-	Root::Root(RenderSystemType type) 
+	Root::Root() 
 		: mRender(NULL)
 		, mAutoWindow(NULL)
 	{
-		mRender = _createRenderSystem(type);
+		mRender = _createRenderSystem();
 	}
 
 	Root::~Root() {
@@ -26,20 +27,13 @@ namespace six {
 			mAutoWindow = mAutoWindow;
 	}
 
-	RenderSystem* Root::_createRenderSystem(RenderSystemType type) {
-		switch (type) {
-			case RST_GL:
-				return NEW GLRenderSystem();
-				break;
-			case RST_GLES:
-				ASSERT(0);
-				break;
-			case RST_GLES20:
-				ASSERT(0);
-				break;
-			default:
-				ASSERT(0);
-		}
-		return NULL;
+	RenderSystem* Root::_createRenderSystem() {
+		RenderSystem* renderSystem = NULL;
+#if RENDER_SYS == RENDER_SYS_GL
+		return NEW GLRenderSystem();
+#else
+#endif
+		ASSERT(renderSystem);
+		return renderSystem;
 	}
 }
