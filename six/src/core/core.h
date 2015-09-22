@@ -12,6 +12,9 @@
 #endif
 
 #include "stringutil.h"
+#include "singleton.h"
+#include "dynlib.h"
+#include "dynlibmgr.h"
 
 #include "datastream.h"
 #include "filestream.h"
