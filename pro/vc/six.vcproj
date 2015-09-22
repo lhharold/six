@@ -184,11 +184,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\dynlib.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\dynlib.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\dynlibmgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\dynlibmgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\root.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\root.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\singleton.h"
 				>
 			</File>
 			<File
