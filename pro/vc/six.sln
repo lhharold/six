@@ -8,6 +8,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app", "app.vcproj", "{DE68B
 		{EDBDC0C1-182A-40DC-8284-06CAF2F97E68} = {EDBDC0C1-182A-40DC-8284-06CAF2F97E68}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glrender", "glrender.vcproj", "{C849900C-8BA8-474A-A822-D08189BF62A8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glesrender", "glesrender.vcproj", "{A2CE5767-EBBE-47AD-A2F9-143A2895E854}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +26,14 @@ Global
 		{DE68B735-EF19-4161-9DB8-5C237773A7B8}.Debug|Win32.Build.0 = Debug|Win32
 		{DE68B735-EF19-4161-9DB8-5C237773A7B8}.Release|Win32.ActiveCfg = Release|Win32
 		{DE68B735-EF19-4161-9DB8-5C237773A7B8}.Release|Win32.Build.0 = Release|Win32
+		{C849900C-8BA8-474A-A822-D08189BF62A8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C849900C-8BA8-474A-A822-D08189BF62A8}.Debug|Win32.Build.0 = Debug|Win32
+		{C849900C-8BA8-474A-A822-D08189BF62A8}.Release|Win32.ActiveCfg = Release|Win32
+		{C849900C-8BA8-474A-A822-D08189BF62A8}.Release|Win32.Build.0 = Release|Win32
+		{A2CE5767-EBBE-47AD-A2F9-143A2895E854}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A2CE5767-EBBE-47AD-A2F9-143A2895E854}.Debug|Win32.Build.0 = Debug|Win32
+		{A2CE5767-EBBE-47AD-A2F9-143A2895E854}.Release|Win32.ActiveCfg = Release|Win32
+		{A2CE5767-EBBE-47AD-A2F9-143A2895E854}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
