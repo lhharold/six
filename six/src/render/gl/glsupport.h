@@ -25,7 +25,8 @@ namespace six {
 		virtual GLRenderWindow* createWindow(GLRenderSystem* renderSystem, bool autoWindow, const char* windowName) = 0;
 		virtual GLRenderWindow* newWindow(const char* windowName, u32 width, u32 height, bool fullScreen) = 0;
 
-		virtual void startup() = 0;
+		virtual void start() = 0;
+		virtual void stop() = 0;
 
 	    bool checkMinGLVersion(const char* v) const;
 		bool checkExtension(const char* ext) const;

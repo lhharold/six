@@ -1,4 +1,5 @@
 #include "core.h"
+#include "dynlibmgr.h"
 
 namespace six {
 	template<> DynLibMgr* Singleton<DynLibMgr>::sInstance = NULL;

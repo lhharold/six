@@ -10,7 +10,7 @@ namespace six {
 		RenderSystem();
 		virtual ~RenderSystem();
 
-		virtual RenderWindow* startup(bool autoWindow, const char* windowName) = 0;
+		virtual RenderWindow* startup(bool autoWindow, const char* windowName) {}
 		virtual RenderWindow* createWindow(const char* windowName, u32 width, u32 height, bool fullScreen) = 0;
 		virtual void shutdown() = 0;
 		

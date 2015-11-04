@@ -13,7 +13,13 @@ namespace six {
 		virtual GLRenderWindow* createWindow(GLRenderSystem* renderSystem, bool autoWindow, const char* windowName);
 		virtual GLRenderWindow* newWindow(const char* windowName, u32 width, u32 height, bool fullScreen);
 
-		virtual void startup();
+		virtual void start();
+		virtual void stop();
+	protected:
+		void initializeWGL();
+		static LRESULT CALLBACK dummyWndProc(HWND hwnd, UINT umsg, WPARAM wp, LPARAM lp);
+
+		Win32Window* mInitWindow;
 	};
 
 	inline GLSupport* getGLSupport() {

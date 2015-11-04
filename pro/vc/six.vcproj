@@ -176,6 +176,14 @@
 			Name="core"
 			>
 			<File
+				RelativePath="..\..\six\src\core\color.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\config.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\core.h"
 				>
 			</File>
@@ -200,6 +208,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\math.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\math.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\plugin.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\root.cpp"
 				>
 			</File>
@@ -212,11 +232,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\staticpluginloader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\stringutil.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\stringutil.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\vector.h"
 				>
 			</File>
 		</Filter>
@@ -236,6 +264,10 @@
 			Name="render"
 			>
 			<File
+				RelativePath="..\..\six\src\render\common.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\render\rendersystem.cpp"
 				>
 			</File>
@@ -244,53 +276,29 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\six\src\render\rendertarget.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\render\rendertarget.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\rendertargetlistener.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\renderwindow.h"
 				>
 			</File>
-			<Filter
-				Name="gl"
+			<File
+				RelativePath="..\..\six\src\render\viewport.cpp"
 				>
-				<File
-					RelativePath="..\..\six\src\render\gl\glcontext.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\six\src\render\gl\glrendersystem.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\six\src\render\gl\glrendersystem.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\six\src\render\gl\glrenderwindow.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\six\src\render\gl\glsupport.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\six\src\render\gl\glsupport.h"
-					>
-				</File>
-				<Filter
-					Name="win32"
-					>
-					<File
-						RelativePath="..\..\six\src\gl\win32\glwin32support.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\six\src\gl\win32\glwin32support.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\viewport.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\six\src\buildsetting.h"

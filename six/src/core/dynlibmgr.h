@@ -10,7 +10,7 @@ namespace six {
 		DynLib* load(const char* libName);
 
 	protected:
-		typename Map<String, DynLib*> DynLibMap;
+		typedef Map<String, DynLib*> DynLibMap;
 		DynLibMap mDynLibMap;
 	};
 }

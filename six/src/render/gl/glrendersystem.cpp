@@ -23,7 +23,7 @@ namespace six {
 	}
 
 	RenderWindow* GLRenderSystem::startup(bool autoWindow, const char* windowName) {
-		mGLSupport->startup();
+		mGLSupport->start();
 		GLRenderWindow* window = mGLSupport->createWindow(this, autoWindow, windowName);
 
 		RenderSystem::startup(autoWindow, windowName);
@@ -46,7 +46,10 @@ namespace six {
 	}
 
 	void GLRenderSystem::shutdown() {
+		RenderSystem::shutdown();
 
+		mGLSupport->stop();
+		mFlags = 0;
 	}
 
 	//////////////////////////////////////////////////////////////////////////

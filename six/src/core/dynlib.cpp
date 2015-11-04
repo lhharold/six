@@ -20,6 +20,6 @@ namespace six {
 	}
 
 	void* DynLib::getFunc(const char* funcName) {
-
+		return NULL;
 	}
 }
