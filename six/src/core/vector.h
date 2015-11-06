@@ -27,7 +27,7 @@ namespace six {
     Vector2f(f32 fx, f32 fy) : x(fx), y(fy) {}
     Vector2f(const Vector2f& vec) : x(vec.x), y(vec.y) {}
 
-    f32 operator[] (u8 i) {ASSERT(i>=0 && i <2); return value[i];}
+    f32 operator[] (u8 i) {ASSERT(i <2); return value[i];}
     const Vector2f& operator = (const Vector2f& vec) {x = vec.x; y = vec.y; return *this;}
     bool operator == (const Vector2f& vec) const {return F_EQUAL(x, vec.x) && F_EQUAL(y, vec.y);}
     bool operator != (const Vector2f& vec) const {return !operator ==(vec);}
@@ -39,7 +39,7 @@ namespace six {
     Vector2f operator + (const Vector2f& vec) const{return Vector2f(x+vec.x, y+vec.y);}
     Vector2f& operator += (const Vector2f& vec) {return (*this = *this+vec);}
     Vector2f operator - (const Vector2f& vec) const{return Vector2f(x-vec.x, y-vec.y);}
-    Vector2f& operator -= (const Vector2f& clr) {return (*this = *this-clr);}
+    Vector2f& operator -= (const Vector2f& vec) {return (*this = *this-vec);}
     Vector2f operator * (f32 val)const {return Vector2f(x*val, y*val);}
     Vector2f& operator *= (f32 val) {return (*this = *this*val);}
     Vector2f operator * (const Vector2f& vec)const {return Vector2f(x*vec.x, y*vec.y);}
@@ -121,9 +121,9 @@ namespace six {
     Vector3f(f32 fx, f32 fy, f32 fz) : x(fx), y(fy), z(fz) {}
     Vector3f(const Vector3f& vec) : x(vec.x), y(vec.y), z(vec.z) {}
 
-    f32 operator[] (u8 i) {ASSERT(i>=0 && i <3); return value[i];}
+    f32 operator[] (u8 i) {ASSERT(i<3); return value[i];}
     const Vector3f& operator = (const Vector3f& vec) {x = vec.x; y = vec.y; z = vec.z; return *this;}
-    bool operator == (const Vector3f& vec) const {return F_EQUAL(x, vec.x) && F_EQUAL(y, vec.y) && F_EQUAL(z, vec.z);;}
+    bool operator == (const Vector3f& vec) const {return F_EQUAL(x, vec.x) && F_EQUAL(y, vec.y) && F_EQUAL(z, vec.z);}
     bool operator != (const Vector3f& vec) const {return !operator ==(vec);}
 		bool operator <= (const Vector3f& vec) const {return x<=vec.x && y<=vec.y && z<=vec.z;}
 		bool operator >= (const Vector3f& vec) const {return x>=vec.x && y>=vec.y && z>=vec.z;}
@@ -133,7 +133,7 @@ namespace six {
     Vector3f operator + (const Vector3f& vec) const{return Vector3f(x+vec.x, y+vec.y, z+vec.z);}
     Vector3f& operator += (const Vector3f& vec) {return (*this = *this+vec);}
     Vector3f operator - (const Vector3f& vec) const{return Vector3f(x-vec.x, y-vec.y, z-vec.z);}
-    Vector3f& operator -= (const Vector3f& clr) {return (*this = *this-clr);}
+    Vector3f& operator -= (const Vector3f& vec) {return (*this = *this-vec);}
     Vector3f operator * (f32 val)const {return Vector3f(x*val, y*val, z*val);}
     Vector3f& operator *= (f32 val) {return (*this = *this*val);}
     Vector3f operator * (const Vector3f& vec)const {return Vector3f(x*vec.x, y*vec.y, z*vec.z);}
@@ -213,6 +213,67 @@ namespace six {
 			return Math::acos(f);
   }
 #endif
+
+  class Vector4f {
+  public:
+    static const Vector4f Zero = Vector4f();
+    static const Vector4f One = Vector4f(1.f, 1.f, 1.f, 1.f);
+    union {
+      struct {
+        f32 x;
+        f32 y;
+        f32 z;
+        f32 w;
+      };
+      f32 value[4];
+    };
+
+    Vector4f() : x(0.f), y(0.f), z(0.f), w(0.f) {}
+    explicit Vector4f(f32 val[3]) : x(val[0]), y(val[1]), z(val[2]), w(val[3]) {}
+    Vector4f(f32 fx, f32 fy, f32 fz, f32 fw) : x(fx), y(fy), z(fz), w(fw) {}
+    Vector4f(const Vector4f& vec) : x(vec.x), y(vec.y), z(vec.z), w(vec.w) {}
+
+    f32 operator[] (u8 i) {ASSERT(i <4); return value[i];}
+    const Vector4f& operator = (const Vector4f& vec) {x = vec.x; y = vec.y; z = vec.z; w = vec.w; return *this;}
+    bool operator == (const Vector4f& vec) const {return F_EQUAL(x, vec.x) && F_EQUAL(y, vec.y) && F_EQUAL(z, vec.z) && F_EQUAL(w, vec.w);}
+    bool operator != (const Vector4f& vec) const {return !operator ==(vec);}
+		bool operator <= (const Vector4f& vec) const {return x<=vec.x && y<=vec.y && z<=vec.z && w<=vec.w;}
+		bool operator >= (const Vector4f& vec) const {return x>=vec.x && y>=vec.y && z>=vec.z && w>=vec.w;}
+		bool operator < (const Vector4f& vec) const {return x<vec.x && y<vec.y && z<vec.z && w<vec.w;}
+		bool operator > (const Vector4f& vec) const {return x>vec.x && y>vec.y && z>vec.z && w>vec.w;}
+
+    Vector4f operator + (const Vector4f& vec) const{return Vector4f(x+vec.x, y+vec.y, z+vec.z, w+vec.w);}
+    Vector4f& operator += (const Vector4f& vec) {return (*this = *this+vec);}
+    Vector4f operator - (const Vector4f& vec) const{return Vector4f(x-vec.x, y-vec.y, z-vec.z, w-vec.w);}
+    Vector4f& operator -= (const Vector4f& vec) {return (*this = *this-vec);}
+    Vector4f operator * (f32 val)const {return Vector4f(x*val, y*val, z*val, w*val);}
+    Vector4f& operator *= (f32 val) {return (*this = *this*val);}
+    Vector4f operator * (const Vector4f& vec)const {return Vector4f(x*vec.x, y*vec.y, z*vec.z, w*vec.w);}
+    Vector4f& operator *= (const Vector4f& vec) {return (*this = *this*vec);}
+    Vector4f operator / (f32 val)const {ASSERT(!F_ZERO(val)); return Vector4f(x/val, y/val, z/val, w/val);}
+    Vector4f& operator /= (f32 val) {return (*this = *this/val);}
+    Vector4f operator / (const Vector4f& vec)const {ASSERT(!F_ZERO(vec.x) && !F_ZERO(vec.y) && !F_ZERO(vec.z)) && !F_ZERO(vec.w); return Vector4f(x/vec.x, y/vec.y, z/vec.z, w/vec.w);}
+    Vector4f& operator /= (const Vector4f& vec) {return (*this = *this/vec);}
+    Vector4f operator - () const {return Vector4f(-x, -y, -z, -w);}
+
+    bool isNan() {return Math::isNan(x) || Math::isNan(y) || Math::isNan(z) || Math::isNan(w);}
+    bool empty() const {return F_ZERO(x*x+y*y+z*z+w*w);}
+    void clear() const {x=0.f; y=0.f; z=0.f; w=0.f;}
+    void setZero() const {clear();}
+    void set(f32 fx, f32 fy, f32 fz, f32 fw) {x = fx; y = fy; z = fz; w = fw;}
+    void set(const Vector4f& vec) {x = vec.x; y = vec.y; z = vec.z, w = vec.w;}
+    void swap(Vector4f& vec) {SWAP(x, vec.x); SWAP(y, vec.y); SWAP(z, vec.z); SWAP(w, vec.w);}
+
+    Vector4f normalizeEx() const {Vector4f vec = *this; vec.normalize(); return vec;}
+    void length(f32 len) {normalize(); *this *= len;}
+    f32 length() const {return empty() ? 0.f : Math::sqrt(lengthSqr());}
+    f32 lengthSqr() const {return x*x + y*y + z*z + w*w;}
+    f32 distance(const Vector4f& vec) const {return (*this - vec).length();}
+    f32 distanceSqr(const Vector4f& vec) const {return (*this - vec).lengthSqr();}
+    void makeFloor(const Vector4f& vec) {if(vec.x < x) x = vec.x; if(vec.y < y) y = vec.y; if(vec.z < z) z = vec.z; if(vec.w < w) w = vec.w;}
+    void makeCeil(const Vector4f& vec) {if(vec.x > x) x = vec.x; if(vec.y > y) y = vec.y; if(vec.z > z) z = vec.z; if(vec.w > w) w = vec.w;}
+    f32 dot(const Vector4f& vec) const {return x*vec.x + y*vec.y + z*vec.z + w*vec.w;}
+  }
 }
 
 #endif //__SIX_VECTOR_H_INCLUDE__

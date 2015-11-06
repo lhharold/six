@@ -57,7 +57,7 @@ namespace six {
 		const Color4f& operator = (const Color4f& clr) {MEMCPY(value, clr.value, sizeof(value)); return *this;}
 		bool operator == (const Color4f& clr) const {return F_EQUAL(r, clr.r) && F_EQUAL(g, clr.g) && F_EQUAL(b, clr.b) && F_EQUAL(a, clr.a);}
 		bool operator != (const Color4f& clr) const {return !(operator == (clr));}
-		f32 operator[] (u8 i) {ASSERT(i >= 0 && i < 4); return value[i];}
+		f32 operator[] (u8 i) {ASSERT(i<4); return value[i];}
 		Color4f operator + (const Color4f& clr) const{return Color4f(r+clr.r, g+clr.g, b+clr.b, a+clr.a);}
 		Color4f& operator += (const Color4f& clr) {return (*this = *this+clr);}
 		Color4f operator - (const Color4f& clr) const{return Color4f(r-clr.r, g-clr.g, b-clr.b, a-clr.a);}
