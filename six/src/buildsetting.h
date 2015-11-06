@@ -9,4 +9,6 @@
 //user setting render sytem
 #define RENDER_SYS RENDER_SYS_GL
 
+#define STATIC_LIB
+
 #endif //__SIX_BUILDSETTING_H_INCLUDE__

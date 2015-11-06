@@ -4,10 +4,16 @@
 namespace six {
 	class GLContext {
 	public:
-		GLContext() {}
+		GLContext() : mInit(false) {}
 		virtual ~GLContext() {}
-
-		void active() {}
+    virtual void setCurrent() = 0;
+    virtual void endCurrent() = 0;
+    virtual void releaseContext() = 0;
+    virtual GLContext* clone() = 0;
+    bool getInitialized() {return mInit;}
+    void setInitialized() {mInit = true;}
+  protected:
+    bool mInit;
 	};
 }
 #endif //__SIX_GLCONTEXT_H_INCLUDE__

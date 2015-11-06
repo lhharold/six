@@ -5,6 +5,7 @@ namespace six {
 
 	class Viewport {
 	public:
+#if 0
 		Viewport(Camera* camera, RenderTarget* target, f32 left, f32 top, f32 width, f32 height, int zOrder);
 		virtual ~Viewport();
 		void _updateDimensions();
@@ -74,6 +75,7 @@ namespace six {
 		OrientationMode mOrientationMode;
 		static OrientationMode mDefaultOrientationMode;
 		bool mIsAutoUpdated;
+#endif
 	};
 }
 #endif //__SIX_RENDERVIEWPORT_H_INCLUDE__

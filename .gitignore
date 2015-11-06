@@ -1,13 +1,16 @@
 !*.cpp
 !*.h
 !*.md
+!*.sln
+!*.vcproj
+
+GPATH
+GRTAGS
+GTAGS
 
 bin/data
 !*.glsl
 
-pro/vc
-!*.sln
-!*.vcproj
 pro/vc/Debug
 
 six/export/lib

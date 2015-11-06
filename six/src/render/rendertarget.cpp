@@ -2,6 +2,7 @@
 #include "rendertarget.h"
 
 namespace six {
+#if 0
 	RenderTarget::RenderTarget(const char* name)
 		: mName(name)
 		, mPriority(DEFAULT_RENDERTARGET_GROUP)
@@ -187,4 +188,5 @@ namespace six {
 			(*i)->postRenderTargetUpdate(evt);
 		}
 	}
+#endif
 }

@@ -21,9 +21,10 @@ namespace six {
             u32 batchCount;
         };
 	public:
-		RenderTarget(const char* name);
+		RenderTarget(const char* name) {}
 		virtual ~RenderTarget();
 		const char* getName() const {return mName.c_str();}
+#if 0
 		virtual u32 getWidth(void) const {return mWidth;}
 		virtual u32 getHeight(void) const {return mHeight;}
 		virtual u32 getColourDepth(void) const {return mColorDepth;}
@@ -64,8 +65,10 @@ namespace six {
 		virtual void fireViewportPostUpdate(Viewport* vp);
 		virtual void fireViewportAdded(Viewport* vp);
 		virtual void fireViewportRemoved(Viewport* vp);
+#endif
 
 		String mName;
+#if 0
 		u8 mPriority;
 		u32 mWidth;
 		u32 mHeight;
@@ -84,6 +87,7 @@ namespace six {
 
 		typedef Vector<RenderTargetListener*> RenderTargetListenerList;
 		RenderTargetListenerList mListeners;
+#endif
 	};
 
 }
