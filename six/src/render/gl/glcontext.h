@@ -9,7 +9,7 @@ namespace six {
     virtual void setCurrent() = 0;
     virtual void endCurrent() = 0;
     virtual void releaseContext() = 0;
-    virtual GLContext* clone() = 0;
+    virtual GLContext* clone() const = 0;
     bool getInitialized() {return mInit;}
     void setInitialized() {mInit = true;}
   protected:

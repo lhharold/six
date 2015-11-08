@@ -1,4 +1,4 @@
-#include "core.h"
+#include "glcore.h"
 #include "glsupport.h"
 
 #define GL_VERSION_HIGH		16

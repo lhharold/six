@@ -1,5 +1,6 @@
-#include "core.h"
+#include "glcore.h"
 #include "win32context.h"
+#include "../glrendersystem.h"
 
 namespace six {
   Win32Context::Win32Context(HDC hdc, HGLRC glrc) : mHDC(hdc), mGlrc(glrc){
@@ -8,10 +9,10 @@ namespace six {
 
   Win32Context::~Win32Context() {
 		GLRenderSystem *rs = static_cast<GLRenderSystem*>(Root::get().getRenderSystem());
-		rs->_unregisterContext(this);
+		rs->unregisterContext(this);
   }
 
-  void Win32Context::setContext() {
+  void Win32Context::setCurrent() {
     wglMakeCurrent(mHDC, mGlrc);
   }
   void Win32Context::endCurrent() {
@@ -22,7 +23,7 @@ namespace six {
     if(!newGlrc)
       ASSERT(0 && "Win32Context::clone - wglCreateContext failed.");
     HGLRC oldGlrc = wglGetCurrentContext();
-    HDC = oldHdc = wglGetCurrentDC();
+    HDC oldHdc = wglGetCurrentDC();
     if(!wglShareLists(mGlrc, newGlrc)) {
       wglDeleteContext(newGlrc);
       ASSERT(0 && "Win32Context::clone - wglShareLists failed.");

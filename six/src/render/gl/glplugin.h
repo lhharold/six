@@ -2,6 +2,7 @@
 #define __SIX_GLPLUGIN_H_INCLUDE__
 
 namespace six {
+  class GLRenderSystem;
 	class GLPlugin : public Plugin {
 	public:
 		GLPlugin();

@@ -21,12 +21,15 @@ namespace six {
             u32 batchCount;
         };
 	public:
-		RenderTarget(const char* name) {}
+		RenderTarget() {}
 		virtual ~RenderTarget();
 		const char* getName() const {return mName.c_str();}
-#if 0
 		virtual u32 getWidth(void) const {return mWidth;}
 		virtual u32 getHeight(void) const {return mHeight;}
+		virtual void setActive(bool active) {mActive = active;}
+		virtual bool isActive() const {return mActive;}
+    virtual void getUserData(const char* name, void* data) {}
+#if 0
 		virtual u32 getColourDepth(void) const {return mColorDepth;}
 		virtual void update(bool swapbuffers = true);
 		virtual void swapBuffers() {}
@@ -42,8 +45,6 @@ namespace six {
 		virtual void removeAllListener();
 		virtual void setPriority(u8 priority) {mPriority = priority};
 		virtual u8 getPriority() {return mPriority;}
-		virtual void setActive(bool active) {mActive = active;}
-		virtual bool isActive() const {return mActive;}
 		virtual void setAutoUpdate(bool autoUpdate) {mAutoUpdate = autoUpdate;}
 		virtual void isAutoUpdate()const {return mAutoUpdate;}
 		//virtual void copyContentsToMemory()
@@ -57,7 +58,9 @@ namespace six {
 		virtual void _updateViewport(Viewport* viewport, bool updateStatistics = true);
 		virtual void _updateAutoUpdateViewports(bool updateStatistics = true);
 		virtual void _endUpdate();
+#endif
 	protected:
+#if 0
 		void updateStats();
 		virtual void firePreUpdate();
 		virtual void firePostUpdate();
@@ -68,10 +71,14 @@ namespace six {
 #endif
 
 		String mName;
-#if 0
-		u8 mPriority;
 		u32 mWidth;
 		u32 mHeight;
+		bool mActive;
+
+		typedef Map<int, Viewport*> ViewportList;
+		ViewportList mViewportList;
+#if 0
+		u8 mPriority;
 		u32 mColorDepth;
 		bool mIsDepthBuffered;
 		FrameStats mStats;
@@ -79,11 +86,8 @@ namespace six {
 		u32 mLastSecond;
 		u32 mLastTime;
 		u32 mFrameCount;
-		bool mActive;
 		bool mAutoUpdate;
 		
-		typedef Map<int, Viewport*> ViewportList;
-		ViewportList mViewportList;
 
 		typedef Vector<RenderTargetListener*> RenderTargetListenerList;
 		RenderTargetListenerList mListeners;

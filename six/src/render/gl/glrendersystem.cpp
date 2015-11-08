@@ -1,6 +1,7 @@
-#include "core.h"
+#include "glcore.h"
 #include "glrendersystem.h"
-#include "glrenderwindow.h"
+#include "renderwindow.h"
+#include "glcontext.h"
 
 #if RENDER_SYS == RENDER_SYS_GL
 	#pragma comment(lib, "OpenGL32.lib")
@@ -24,7 +25,7 @@ namespace six {
 
 	RenderWindow* GLRenderSystem::startup(bool autoWindow, const char* windowName) {
 		mGLSupport->start();
-		GLRenderWindow* window = mGLSupport->createWindow(this, autoWindow, windowName);
+		RenderWindow* window = mGLSupport->createWindow(this, autoWindow, windowName);
 
 		RenderSystem::startup(autoWindow, windowName);
 		return (RenderWindow*)window;
@@ -35,7 +36,7 @@ namespace six {
 			ASSERT(0 && "GLRenderSystem::createWindow - Window with name already exists");
 			return NULL;
 		}
-		GLRenderWindow* window = mGLSupport->newWindow(windowName, width, height, fullScreen);
+		RenderWindow* window = mGLSupport->newWindow(windowName, width, height, fullScreen);
 		RenderWindow* baseWindow = (RenderWindow*)window;
 		attachRenderTarget(baseWindow);
 
@@ -53,11 +54,25 @@ namespace six {
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	void GLRenderSystem::initialiseContext(GLRenderWindow* window) {
-		mMainContext = window->getContext();
+	void GLRenderSystem::initialiseContext(RenderWindow* window) {
+    mMainContext = NULL;
+		window->getUserData("GLCONTEXT", &mMainContext);
 		mActiveContext = mMainContext;
 		if(mActiveContext)
-			mActiveContext->active();
+			mActiveContext->setCurrent();
 		mGLSupport->initialiseExtensions();
 	}
+  void GLRenderSystem::unregisterContext(GLContext *context) {
+    if(mActiveContext == context) {
+      if(mActiveContext != mMainContext) {
+        switchContext(mMainContext);
+      } else {
+        mActiveContext->endCurrent();
+        mActiveContext = NULL;
+        mMainContext = NULL;
+      }
+    }
+  }
+  void GLRenderSystem::switchContext(GLContext* context) {
+  }
 }

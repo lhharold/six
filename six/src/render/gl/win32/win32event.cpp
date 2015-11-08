@@ -1,4 +1,4 @@
-#include "core.h"
+#include "glcore.h"
 #include "win32event.h"
 
 namespace six {
@@ -9,7 +9,7 @@ namespace six {
     }
     RenderWindow* win = (RenderWindow*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
     if(!win) {
-      return DefWindowProc(hWnd, uMgs, wParam, lParam);
+      return DefWindowProc(hWnd, msg, wParam, lParam);
     }
     switch (msg)
     {
@@ -64,11 +64,11 @@ namespace six {
     case WM_CLOSE:
     {
       //notify listener;
-      win->destory();
+      win->destroy();
       return 0;
     }
     }// end switch
 
-    return DefWindowProc(hWnd, uMgs, wParam, lParam);
+    return DefWindowProc(hWnd, msg, wParam, lParam);
   }
 }

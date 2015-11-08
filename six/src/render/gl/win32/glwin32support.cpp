@@ -1,5 +1,7 @@
-#include "core.h"
+#include "glcore.h"
 #include "glwin32support.h"
+#include "win32window.h"
+#include "../glrendersystem.h"
 
 namespace six {
 	GLWin32Support::GLWin32Support() : mInitWindow(NULL) {
@@ -7,7 +9,7 @@ namespace six {
 	}
 	GLWin32Support::~GLWin32Support() {
 	}
-	GLRenderWindow* GLWin32Support::createWindow(GLRenderSystem* renderSystem, bool autoWindow, const char* windowName){
+	RenderWindow* GLWin32Support::createWindow(GLRenderSystem* renderSystem, bool autoWindow, const char* windowName){
 		if(autoWindow) {
 			int width = 1024;
 			int height = 768;
@@ -16,14 +18,14 @@ namespace six {
 		}
 		return NULL;
 	}
-	GLRenderWindow* GLWin32Support::newWindow(const char* windowName, u32 width, u32 height, bool fullScreen) {
+	RenderWindow* GLWin32Support::newWindow(const char* windowName, u32 width, u32 height, bool fullScreen) {
 		Win32Window* window = NEW Win32Window(this);
 		window->create(windowName, width, height, fullScreen);
 		if(mInitWindow == NULL)
 			mInitWindow = window;
 		return window;
 	}
-	void GLWin32Support::startup() {
+	void GLWin32Support::start() {
 	}
 
 	void GLWin32Support::stop() {

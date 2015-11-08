@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 //temp using std
 #include <algorithm>
@@ -52,24 +53,24 @@ namespace six {
 	typedef unsigned long long u64;
 	typedef signed long long   s64;
 #endif //
-	typedef float				f32;
-	typedef double				f64;
+	typedef float				    f32;
+	typedef double				  f64;
 
-
-
-	typedef u32					UInt;
-	typedef s32					Int;
-	typedef f32					Float;
-
-
+	typedef string String;
 
 	#define NEW new
 	#define SAFE_DEL(p)			do{ if (p) { delete (p); (p) = NULL; } }while(0)
 	#define SAFE_DEL_ARRAY(p)	do{ if (p) { delete[] (p); (p) = NULL; } }while(0)
 
+	#define PRINTF printf
+	#define SSCANF sscanf
+
 	#define MEMCPY memcpy
+	#define MEMSET memset
 	#define STRLEN strlen
 	#define STRCPY strcpy
+	#define STRCHR strchr
+	#define STRSTR strstr
 
 	#define FOPEN	fopen
 	#define FREAD	fread
@@ -77,12 +78,39 @@ namespace six {
 	#define FSEEK	fseek
 	#define FWRITE	fwrite
 	#define FCLOSE	fclose
-	#define FREMOVE remove
+	#define FREMOVE ::remove
 	#define FEOF	feof
 
 	#define ASSERT assert
 
-	typedef string String;
+#ifndef NULL
+  #define NULL 0
+#endif
+
+//#if 1
+//#if 0
+//	#define CLAMP(val, min, max)  ( (val) > (max) ? (max) : ((val)<(min)?(min):(val)) )
+//	#define MIN(x,y)		          ((x)<(y)?(x):(y))
+//	#define MAX(x,y)		          ((x)>(y)?(x):(y))
+//	#define ABS(x)                ((x) > 0 ? (x) : (-(x)))
+//#else
+//    static template<class T> inline T CLAMP(T val, T min, T max) {return val > max ? max : (val < min ? min : val);}
+//    static template<class T> inline T MIN(T x, T y) {return x < y ? x : y;}
+//    static template<class T> inline T MAX(T x, T y) {return x > y ? x : y;}
+//    static template<class T> inline T ABS(T x) {return x > 0 ? x : -x;}
+//#endif
+//	#define F_PRECISION	1e06
+//	inline bool F_ZERO(f32 x, f32 precision = F_PRECISION) { return ABS(x) < precision; };
+//	inline bool F_LESS_ZERO(f32 x, f32 precision = F_PRECISION) { return x < -precision; };
+//	inline bool F_MORE_ZERO(f32 x, f32 precision = F_PRECISION) { return x > precision; };
+//	inline bool F_EQUAL(f32 a, f32 b, f32 precision = F_PRECISION) { return F_ZERO(a-b, precision); };
+//	inline bool F_MORE(f32 a, f32 b, f32 precision = F_PRECISION) { return F_MORE_ZERO(a-b, precision); };
+//	inline bool F_LESS(f32 a, f32 b, f32 precision = F_PRECISION) { return F_LESS_ZERO(a-b, precision); };
+//	inline bool F_MORE_EQUAL(f32 a, f32 b, f32 precision = F_PRECISION) { return !F_LESS(a, b, precision); };
+//	inline bool F_LESS_EQUAL(f32 a, f32 b, f32 precision = F_PRECISION) { return !F_MORE(a, b, precision); };
+//
+//  inline f32 F_ROUND(f32 x) {return x > 0.f ? int(x+0.5f) : int(x-0.f);}
+//#endif
 }
 
 #pragma warning(disable: 4996)

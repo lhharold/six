@@ -14,8 +14,10 @@ namespace six {
 		virtual RenderWindow* startup(bool autoWindow, const char* windowName);
 		virtual RenderWindow* createWindow(const char* windowName, u32 width, u32 height, bool fullScreen);
 		virtual void shutdown();
+    void unregisterContext(GLContext *context);
 	protected:
-		void initialiseContext(GLRenderWindow* window);
+		void initialiseContext(RenderWindow* window);
+    void switchContext(GLContext* context);
 		GLSupport* mGLSupport;
 		GLContext* mMainContext;
 		GLContext* mActiveContext;

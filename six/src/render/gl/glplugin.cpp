@@ -1,4 +1,4 @@
-#include "core.h"
+#include "glcore.h"
 #include "glrendersystem.h"
 #include "glplugin.h"
 

@@ -2,6 +2,8 @@
 #define __SIX_RENDERTARGETLISTENER_H_INCLUDE__
 
 namespace six {
+  class RenderTarget;
+  class Viewport;
 	struct RenderTargetEvent {
 		RenderTarget* source;
 	};

@@ -1,7 +1,7 @@
-#yfndef __SIX_WIN32CONTEXT_H_INCLUDE__
+#ifndef __SIX_WIN32CONTEXT_H_INCLUDE__
 #define __SIX_WIN32CONTEXT_H_INCLUDE__
 
-#include "glcontext.h"
+#include "../glcontext.h"
 
 namespace six {
 	class Win32Context : public GLContext {
@@ -9,9 +9,9 @@ namespace six {
     Win32Context(HDC hdc, HGLRC glrc);
     virtual ~Win32Context();
 
-    virtual void setContext();
+    virtual void setCurrent();
     virtual void endCurrent();
-    GLContext* clone() const;
+    virtual GLContext* clone() const;
     virtual void releaseContext();
   protected:
     HDC mHDC;

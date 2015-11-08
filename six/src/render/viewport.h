@@ -5,10 +5,10 @@ namespace six {
 
 	class Viewport {
 	public:
+		void updateDimensions();
 #if 0
 		Viewport(Camera* camera, RenderTarget* target, f32 left, f32 top, f32 width, f32 height, int zOrder);
 		virtual ~Viewport();
-		void _updateDimensions();
 		void update();
 		void clear(u32 buffers = FBT_COLOUR | FBT_DEPTH, const Color& color = Color::Black, f32 depth = 1.f, u16 stencil = 0);
 		RenderTarget getTarget() const;

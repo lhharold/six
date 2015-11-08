@@ -2,7 +2,6 @@
 #define __SIX_GLSUPPORT_H__INCLUDE
 
 namespace six {
-	class GLRenderWindow;
 	class GLRenderSystem;
 	class GLSupport {
 	public:
@@ -22,8 +21,8 @@ namespace six {
 		~GLSupport();
 
 		virtual void initialiseExtensions();
-		virtual GLRenderWindow* createWindow(GLRenderSystem* renderSystem, bool autoWindow, const char* windowName) = 0;
-		virtual GLRenderWindow* newWindow(const char* windowName, u32 width, u32 height, bool fullScreen) = 0;
+		virtual RenderWindow* createWindow(GLRenderSystem* renderSystem, bool autoWindow, const char* windowName) = 0;
+		virtual RenderWindow* newWindow(const char* windowName, u32 width, u32 height, bool fullScreen) = 0;
 
 		virtual void start() = 0;
 		virtual void stop() = 0;

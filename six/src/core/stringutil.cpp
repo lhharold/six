@@ -12,7 +12,6 @@ namespace six {
         if(left)
             str.erase(0, str.find_first_not_of(delims)); // trim left
 	}
-
 	u32 StringUtil::split(Vector<String>& out, const String str, const String& delims, u32 maxSplits, bool preserveDelims) {
         out.reserve(maxSplits ? maxSplits+1 : 10);
         u32 numSplits = 0;
@@ -43,7 +42,6 @@ namespace six {
         } while (pos != String::npos);
 		return out.size();
 	}
-
 	u32 StringUtil::tokenise(Vector<String>&out, const String& str, const String& singleDelims, const String& doubleDelims, unsigned int maxSplits) {
         // Pre-allocate some space for performance
         out.reserve(maxSplits ? maxSplits+1 : 10);    // 10 is guessed capacity for most case
@@ -86,7 +84,6 @@ namespace six {
         } while (start != String::npos);
 		return out.size();
 	}
-
 	void StringUtil::toLowerCase(String& str) {
         std::transform( str.begin(), str.end(), str.begin(), tolower);
 	}

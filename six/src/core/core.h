@@ -1,15 +1,21 @@
 #ifndef __SIX_CORE_H_INCLUDE__
 #define __SIX_CORE_H_INCLUDE__
 
+#include "config.h"
+
 #include "define.h"
 #include "config.h"
+#include "common.h"
 
 #include "buildsetting.h"
 
-#include "math.h"
+#include "_math.h"
 
 #include "color.h"
-#include "vector.h"
+#include "vector2.h"
+#include "vector3.h"
+#include "vector4.h"
+//#include "quaternion.h"
 
 #if RENDER_SYS == RENDER_SYS_GL
 	#include <gl/GL.h>
@@ -27,10 +33,13 @@
 #include "filestream.h"
 #include "filesystem.h"
 
+#include "viewport.h"
+#include "rendertargetlistener.h"
+#include "rendertarget.h"
 #include "renderwindow.h"
-
 #include "rendersystem.h"
 
 #include "root.h"
+
 
 #endif //__SIX_CORE_H_INCLUDE__

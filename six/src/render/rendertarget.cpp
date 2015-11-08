@@ -1,5 +1,4 @@
 #include "core.h"
-#include "rendertarget.h"
 
 namespace six {
 #if 0

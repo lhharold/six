@@ -1,6 +1,8 @@
-#include "core.h"
+#include "glcore.h"
 #include "win32window.h"
 #include "win32event.h"
+#include "glwin32support.h"
+#include "win32context.h"
 
 namespace six {
   Win32Window::Win32Window(GLWin32Support* support)
@@ -11,11 +13,23 @@ namespace six {
     , mGlrc(NULL)
     , mClosed(false)
     , mExternal(false)
+    , mHidden(false)
   {
   }
 
   Win32Window::~Win32Window() {
     
+  }
+
+  void Win32Window::getUserData(const char* name, void* data) {
+    static const String strGLContext = "GLCONTEXT";
+    static const String strWindow = "WINDOW";
+    if(strGLContext == name) {
+      *static_cast<GLContext**>(data) = mContext;
+    } else if(strWindow == name) {
+      HWND* pHwnd = (HWND*)data;
+      *pHwnd = getWindowHandle();
+    }
   }
 
   void Win32Window::create(const char* name, u32 width, u32 height, bool fullScreen) {
@@ -25,7 +39,7 @@ namespace six {
     DWORD dwStyleEx = 0;
     HWND hParent = NULL;
     HMENU hMenu = NULL;
-#if STATIC_LIB
+#ifdef STATIC_LIB
     HINSTANCE hInst = NULL;
 #else
     HINSTANCE hInst = GetModuleHandle("RenderSysGL.dll");
@@ -36,7 +50,7 @@ namespace six {
     mHeight = height;
     mFullScreen = fullScreen;
 
-    if(fullscreen)
+    if(fullScreen)
       dwStyleEx |= WS_EX_TOPMOST;
 
     WNDCLASSEX wcex;
@@ -52,11 +66,11 @@ namespace six {
     wcex.lpszMenuName  = NULL;
     wcex.lpszClassName = "OpenGLWin32Window";
     wcex.hIconSm       = NULL;
-    RegisterClass(&wcex);
+    RegisterClassEx(&wcex);
     mHwnd = CreateWindowEx(dwStyleEx, "OpenGLWin32Window", name, WS_OVERLAPPED, mLeft, mTop,
                            mWidth, mHeight, hParent, hMenu, hInst, this);
 
-    HDC oldHdc wglGetCurrentDC();
+    HDC oldHdc = wglGetCurrentDC();
     HGLRC oldContext = wglGetCurrentContext();
     RECT rc;
     GetWindowRect(mHwnd, &rc);
@@ -93,9 +107,9 @@ namespace six {
 		mHidden = hidden;
 		if (!mExternal) {
       if (hidden)
-        ShowWindow(mHWnd, SW_HIDE);
+        ShowWindow(mHwnd, SW_HIDE);
       else
-        ShowWindow(mHWnd, SW_SHOWNORMAL);
+        ShowWindow(mHwnd, SW_SHOWNORMAL);
     }
 	}
 
@@ -117,5 +131,24 @@ namespace six {
     mClosed = true;
     mHDC = 0;
     mHwnd = 0;
+  }
+
+  void Win32Window::windowMovedOrResized() {
+    if(mHwnd == NULL || IsIconic(mHwnd))
+      return;
+
+    RECT rc;
+    GetWindowRect(mHwnd, &rc);
+    mTop = rc.top;
+    mLeft = rc.left;
+    GetClientRect(mHwnd, &rc);
+    if(mWidth == rc.right && mHeight == rc.bottom)
+      return;
+    mWidth = rc.right - rc.left;
+    mHeight = rc.bottom - rc.top;
+
+    for(ViewportList::iterator i = mViewportList.begin(), iend = mViewportList.end(); i != iend; ++i) {
+      i->second->updateDimensions();
+    }
   }
 }

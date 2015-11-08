@@ -36,8 +36,8 @@ namespace six {
 		virtual u32		writeBufferAlign(void* buffer, int size, u32 align) = 0;
 		virtual u32		writeString(const char* str) = 0;
 
-		virtual u32		readLine(char* buff, u32 maxCount, const char* delim = "\n");
-		virtual u32		skipLine(const char* delim = "\n");
+		virtual u32		readLine(char* buff, u32 maxCount, const char* delim = "\n") = 0;
+		virtual u32		skipLine(const char* delim = "\n") = 0;
 		virtual void	skip(s32 count) = 0;
 		virtual void	seek(u32 pos) = 0;
 		virtual u32		tell() = 0;

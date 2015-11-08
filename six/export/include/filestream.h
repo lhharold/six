@@ -48,6 +48,8 @@ namespace six {
 
 		int getError() {return mError;}
 	protected:
+		void determineAccess(const char* flags);
+
 		void* mFile;
 		int   mError;
 	};
