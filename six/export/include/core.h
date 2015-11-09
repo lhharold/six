@@ -15,13 +15,7 @@
 #include "vector2.h"
 #include "vector3.h"
 #include "vector4.h"
-//#include "quaternion.h"
-
-#if RENDER_SYS == RENDER_SYS_GL
-	#include <gl/GL.h>
-	#include "gl/glext.h"
-#else
-#endif
+#include "quaternion.h"
 
 #include "stringutil.h"
 #include "singleton.h"
@@ -41,5 +35,6 @@
 
 #include "root.h"
 
+#include "staticpluginloader.h"
 
 #endif //__SIX_CORE_H_INCLUDE__

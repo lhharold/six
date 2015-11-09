@@ -19,6 +19,7 @@ namespace six {
     static inline f32 Deg2Rad(f32 x) {return x*deg2rad;}
     static inline f32 Rad2Deg(f32 x) {return x*rad2deg;}
 
+    static inline f32 sin(f32 x) {return ::sin(x);}
     static inline f32 asin(f32 x) {return ::asin(x);}
     static inline f32 cos(f32 x) {return ::cos(x);}
     static inline f32 acos(f32 x) {return ::acos(x);}

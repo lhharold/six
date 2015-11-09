@@ -4,6 +4,7 @@
 #include "rendersystem.h"
 
 namespace six {
+  class StaticPluginLoader;
 	class Root : public Singleton<Root> {
 	public:
 		Root();
@@ -23,6 +24,10 @@ namespace six {
 
 		typedef Vector<Plugin*> PluginStaticList;
 		PluginStaticList mPlugins;
+
+#ifdef STATIC_LIB
+    StaticPluginLoader* mStaticPluginLoader;
+#endif
 
 		union {
 			struct {

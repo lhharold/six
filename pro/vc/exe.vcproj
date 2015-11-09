@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="app"
-	ProjectGUID="{DE68B735-EF19-4161-9DB8-5C237773A7B8}"
-	RootNamespace="app"
+	Name="exe"
+	ProjectGUID="{B32F6BC6-D834-48C7-B0B5-15A1026B0D4C}"
+	RootNamespace="exe"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -21,8 +21,7 @@
 			OutputDirectory="..\..\bin\data\"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="2"
-			ManagedExtensions="0"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -43,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\six\export\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -64,8 +63,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
-				SubSystem="2"
-				EntryPointSymbol=""
+				SubSystem="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -117,7 +115,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -137,7 +135,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"

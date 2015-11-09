@@ -47,8 +47,6 @@ namespace six {
 	}
 
 	void GLRenderSystem::shutdown() {
-		RenderSystem::shutdown();
-
 		mGLSupport->stop();
 		mFlags = 0;
 	}

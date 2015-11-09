@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="..\..\six\export\lib\$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="2"
@@ -150,13 +150,6 @@
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\glwin32support.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\glwin32support.h"
@@ -172,13 +165,6 @@
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\win32context.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\win32context.h"
@@ -194,13 +180,6 @@
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\win32event.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\win32event.h"
@@ -216,13 +195,6 @@
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\win32window.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\win32window.h"
@@ -262,13 +234,6 @@
 		<File
 			RelativePath="..\..\six\src\render\gl\glplugin.cpp"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\..\six\src\render\gl\glplugin.h"
@@ -284,13 +249,6 @@
 		<File
 			RelativePath="..\..\six\src\render\gl\glrendersystem.cpp"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\..\six\src\render\gl\glrendersystem.h"
@@ -306,13 +264,6 @@
 		<File
 			RelativePath="..\..\six\src\render\gl\glsupport.cpp"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\..\six\src\render\gl\glsupport.h"

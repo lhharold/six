@@ -4,14 +4,14 @@
 namespace six {
   class Quaternion {
   public:
-    static const Quaternion Zero = Quaternion(0.f, 0.f, 0.f, 0.f);
-    static const Quaternion Identity = Quaternion();
+    static const Quaternion Zero;
+    static const Quaternion Identity;
     union {
       struct {
-        f32 x;0
-        f32 y;1
-        f32 z;2
-        f32 w;3
+        f32 x;
+        f32 y;
+        f32 z;
+        f32 w;
       };
       f32 value[4];
     };
@@ -28,12 +28,12 @@ namespace six {
     bool operator != (const Quaternion& q) const {return !operator ==(q);}
 
     Quaternion operator + (const Quaternion& q) const{return Quaternion(x+q.x, y+q.y, z+q.z, w+q.w);}
-    Quaternion& operator += (const Quaternion& q) {return (*this = *this+q);}
+    const Quaternion& operator += (const Quaternion& q) {return (*this = *this+q);}
     Quaternion operator - (const Quaternion& q) const{return Quaternion(x-q.x, y-q.y, z-q.z, w-q.z);}
-    Quaternion& operator -= (const Quaternion& q) {return (*this = *this-q);}
+    const Quaternion& operator -= (const Quaternion& q) {return (*this = *this-q);}
     Quaternion operator * (f32 val)const {return Quaternion(x*val, y*val, z*val, w*val);}
-    Quaternion& operator *= (f32 val) {return (*this = *this*val);}
-    Quaternion operator * (const Quaternion& vec)const {
+    const Quaternion& operator *= (f32 val) {return (*this = *this*val);}
+    Quaternion operator * (const Quaternion& vec) {
       const float T0 = (z - y) * (vec.y - vec.z); //z*vy - z*vz - y*vy + y*vz
       const float T1 = (w + x) * (vec.w + vec.x); //w*vw + w*vx + x*vw + x*vx
       const float T2 = (w - x) * (vec.y + vec.z); //w*vy + w*vz - x*vy - x*vz
@@ -50,18 +50,18 @@ namespace six {
       z = T3 + T9 - T6; //w*vz + z*vw + x*vy - y*vx
       w = T0 + T9 - T5; //w*vw - z*vz - y*vy  - x*vx
     }
-    Quaternion& operator *= (const Quaternion& vec) {return (*this = *this*vec);}
+    const Quaternion& operator *= (const Quaternion& vec) {return (*this = *this*vec);}
 
-    Quaternion& mult(const Quaternion& q) {operator*(q); return *this;}
+    const Quaternion& mult(const Quaternion& q) {operator*(q); return *this;}
 		bool isNan() const {return Math::isNan(x) || Math::isNan(y) || Math::isNan(z) || Math::isNan(w);}
     bool empty() const {return F_ZERO(x*x+y*y+z*z+w*w);}
-    void clear() const {x=0.f; y=0.f; z=0.f; w=0.f;}
-    void setZero() const {clear();}
+    void clear() {x=0.f; y=0.f; z=0.f; w=0.f;}
+    void setZero() {clear();}
     void set(f32 fx, f32 fy, f32 fz, f32 fw) {x = fx; y = fy; z=fz; w=fw;}
     void set(const Quaternion& q) {x=q.x; y=q.y; z=q.z; w=q.w;}
     void swap(Quaternion& q) {SWAP(x, q.x); SWAP(y, q.y); SWAP(z, q.z); SWAP(w, q.w);}
 
-    Vector2f normalizeEx() const {Vector2f vec = *this; vec.normalize(); return vec;}
+    Quaternion normalizeEx() const {Quaternion vec = *this; vec.normalize(); return vec;}
     void length(f32 len) {normalize(); *this *= len;}
     f32 length() const {return empty() ? 0.f : Math::sqrt(lengthSqr());}
     f32 lengthSqr() const {return x*x + y*y + z*z + w*w;}

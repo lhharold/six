@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render"
+				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render;..\..\six\src\render\gl"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -173,13 +173,6 @@
 			<File
 				RelativePath="..\..\six\src\stream\filestream.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\stream\filestream.h"
@@ -195,13 +188,6 @@
 			<File
 				RelativePath="..\..\six\src\stream\filesystem.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\stream\filesystem.h"
@@ -221,13 +207,6 @@
 			<File
 				RelativePath="..\..\six\src\core\_math.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\_math.h"
@@ -291,13 +270,6 @@
 			<File
 				RelativePath="..\..\six\src\core\dynlib.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\dynlib.h"
@@ -313,8 +285,24 @@
 			<File
 				RelativePath="..\..\six\src\core\dynlibmgr.cpp"
 				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\dynlibmgr.h"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\matrix3.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -322,10 +310,35 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\six\src\core\dynlibmgr.h"
+				RelativePath="..\..\six\src\core\matrix3.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\matrix4.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\matrix4.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -344,6 +357,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\quaternion.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\quaternion.h"
 				>
 				<FileConfiguration
@@ -357,13 +374,6 @@
 			<File
 				RelativePath="..\..\six\src\core\root.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\root.h"
@@ -394,13 +404,6 @@
 			<File
 				RelativePath="..\..\six\src\core\stringutil.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\stringutil.h"
@@ -416,13 +419,6 @@
 			<File
 				RelativePath="..\..\six\src\core\vector2.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\vector2.h"
@@ -438,13 +434,6 @@
 			<File
 				RelativePath="..\..\six\src\core\vector3.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\vector3.h"
@@ -460,13 +449,6 @@
 			<File
 				RelativePath="..\..\six\src\core\vector4.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\vector4.h"
@@ -486,13 +468,6 @@
 			<File
 				RelativePath="..\..\six\src\utility\console.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\utility\console.h"
@@ -523,13 +498,6 @@
 			<File
 				RelativePath="..\..\six\src\render\rendersystem.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\rendersystem.h"
@@ -545,13 +513,6 @@
 			<File
 				RelativePath="..\..\six\src\render\rendertarget.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\rendertarget.h"
@@ -593,13 +554,6 @@
 			<File
 				RelativePath="..\..\six\src\render\viewport.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\viewport.h"

@@ -22,7 +22,7 @@ namespace six {
         };
 	public:
 		RenderTarget() {}
-		virtual ~RenderTarget();
+    virtual ~RenderTarget(){}
 		const char* getName() const {return mName.c_str();}
 		virtual u32 getWidth(void) const {return mWidth;}
 		virtual u32 getHeight(void) const {return mHeight;}

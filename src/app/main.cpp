@@ -1,6 +1,37 @@
 #include "six.h"
 using namespace six;
 
+#if 1
+int main(int argn, const char* argv[]) {
+  NEW Root();
+  RenderWindow* window = Root::get().startup(true);
+  return 0;
+}
+#else
+int main(int argn, const char* argv[]) {
+
+	FileSystem fileSystem(".");
+	IDataStream* vsStream = fileSystem.open("default_vs.glsl");
+	IDataStream* psStream = fileSystem.open("default_ps.glsl");
+
+	char str[512];
+	memset(str, 0, sizeof(str));
+	printf("%%%%%%%%%%%%vs%%%%%%%%%%%%%%%%%\n");
+	vsStream->readBuffer(str, sizeof(str));
+	printf("%s\n", str);
+	memset(str, 0, sizeof(str));
+	psStream->readBuffer(str, sizeof(str));
+	printf("%%%%%%%%%%%%ps%%%%%%%%%%%%%%%%%\n");
+	printf("%s\n", str);
+
+	SAFE_DEL(vsStream);
+	SAFE_DEL(psStream);
+
+	return 0;
+}
+#endif
+
+#if 0
 #include <windows.h>
 
 #define MAX_LOADSTRING 100
@@ -98,28 +129,5 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	}
 
 	return (int) msg.wParam;
-}
-
-#if 0
-int main(int argn, const char* argv[]) {
-
-	FileSystem fileSystem(".");
-	IDataStream* vsStream = fileSystem.open("default_vs.glsl");
-	IDataStream* psStream = fileSystem.open("default_ps.glsl");
-
-	char str[512];
-	memset(str, 0, sizeof(str));
-	printf("%%%%%%%%%%%%vs%%%%%%%%%%%%%%%%%\n");
-	vsStream->readBuffer(str, sizeof(str));
-	printf("%s\n", str);
-	memset(str, 0, sizeof(str));
-	psStream->readBuffer(str, sizeof(str));
-	printf("%%%%%%%%%%%%ps%%%%%%%%%%%%%%%%%\n");
-	printf("%s\n", str);
-
-	SAFE_DEL(vsStream);
-	SAFE_DEL(psStream);
-
-	return 0;
 }
 #endif

@@ -1,5 +1,6 @@
 #include "core.h"
 #include "gl/glrendersystem.h"
+#include "staticpluginloader.h"
 
 namespace six {
 	template<> Root* Singleton<Root>::sInstance = NULL;
@@ -8,8 +9,16 @@ namespace six {
 		, mAutoWindow(NULL)
 		, flag(0)
 	{
+#ifdef STATIC_LIB
+    mStaticPluginLoader = NEW StaticPluginLoader();
+    mStaticPluginLoader->load();
+#endif
 	}
 	Root::~Root() {
+#ifdef STATIC_LIB
+    mStaticPluginLoader->unload();
+    SAFE_DEL(mStaticPluginLoader);
+#endif
 	}
 	RenderWindow* Root::startup(bool autoWindow, const char* windowName) {
 		mAutoWindow = mRender->startup(autoWindow, windowName);

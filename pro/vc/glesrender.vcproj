@@ -18,10 +18,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="..\..\six\export\lib\$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -143,6 +143,10 @@
 	<References>
 	</References>
 	<Files>
+		<File
+			RelativePath="..\..\six\src\render\gles\dllmain.cpp"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

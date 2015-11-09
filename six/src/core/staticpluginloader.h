@@ -3,7 +3,7 @@
 
 #include "core.h"
 #if RENDER_SYS == RENDER_SYS_GL
-#include "gl\glplugin.h"
+#include "glplugin.h"
 #elif RENDER_SYS == RENDER_SYS_GLES
 #elif RENDER_SYS == RENDER_SYS_GLES2	
 #elif RENDER_SYS == RENDER_SYS_DX9	
