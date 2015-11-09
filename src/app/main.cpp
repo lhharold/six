@@ -3,8 +3,9 @@ using namespace six;
 
 #if 1
 int main(int argn, const char* argv[]) {
-  NEW Root();
-  RenderWindow* window = Root::get().startup(true);
+  Root* root = NEW Root();
+  root->startup(true);
+  root->startRun();
   return 0;
 }
 #else

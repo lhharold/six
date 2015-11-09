@@ -1,6 +1,7 @@
 #include "core.h"
 #include "gl/glrendersystem.h"
 #include "staticpluginloader.h"
+#include "windowevent.h"
 
 namespace six {
 	template<> Root* Singleton<Root>::sInstance = NULL;
@@ -27,6 +28,29 @@ namespace six {
 	RenderWindow* Root::createWindow(const char* name, s32 width, s32 height, bool fullScreen) {
 		return mRender->createWindow(name, width, height, fullScreen);
 	}
+  void Root::startRun() {
+    ASSERT(mRender != NULL);
+    //mRender->_initRenderTargets();
+    //clearEventTimes();
+    mRunning = false;
+    while(!mRunning) {
+      WindowEvent::messagePump();
+      if (!render())
+        break;
+    }
+  }
+  bool Root::render() {
+#if 0
+    if(!_frameStart()) 
+      return false;
+    if(!_updateAllRenderTargets())
+      return false;
+    return _frameEnd();
+#else
+    return true;
+#endif
+  }
+
 	void Root::shutdown() {
 		if(mAutoWindow)
 			mAutoWindow = mAutoWindow;

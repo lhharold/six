@@ -1,6 +1,7 @@
 #ifndef __SIX_VECTOR3_H_INCLUDE__
 #define __SIX_VECTOR3_H_INCLUDE__
 
+#include "quaternion.h"
 namespace six {
   class Vector3f {
   public:
@@ -26,7 +27,8 @@ namespace six {
     Vector3f(f32 fx, f32 fy, f32 fz) : x(fx), y(fy), z(fz) {}
     Vector3f(const Vector3f& vec) : x(vec.x), y(vec.y), z(vec.z) {}
 
-    f32 operator[] (u8 i) {ASSERT(i<3); return value[i];}
+    f32 operator[] (u8 i) const {ASSERT(i<3); return value[i];}
+    f32& operator[] (u8 i) {ASSERT(i<3); return value[i];}
     const Vector3f& operator = (const Vector3f& vec) {x = vec.x; y = vec.y; z = vec.z; return *this;}
     bool operator == (const Vector3f& vec) const {return F_EQUAL(x, vec.x) && F_EQUAL(y, vec.y) && F_EQUAL(z, vec.z);}
     bool operator != (const Vector3f& vec) const {return !operator ==(vec);}
@@ -78,7 +80,7 @@ namespace six {
     f32 normalize();
     Vector3f perpendicular() const; //´¹Ö±
     void resize(f32 len);
-    //Quaternion getRotationTo(const Vector3f& vec, const Vector3f& fallbackAxis = Vector3f::Zero);
+    Quaternion getRotationTo(const Vector3f& vec, const Vector3f& fallbackAxis = Vector3f::Zero);
     f32 angleBetween(const Vector3f& vec);
   };
 }

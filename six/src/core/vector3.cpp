@@ -39,39 +39,39 @@ namespace six {
     perp.normalize();
     return perp;
   }
-  //Quaternion Vector3f::getRotationTo(const Vector3f& dest, const Vector3f& fallbackAxis = Vector3f::Zero) {
-  //  Quaternion q;
-  //  Vector3f v0 = *this;
-  //  Vector3f v1 = dest;
-  //  v0.normalize();
-  //  v1.normalize();
+  Quaternion Vector3f::getRotationTo(const Vector3f& dest, const Vector3f& fallbackAxis) {
+    Quaternion q;
+    Vector3f v0 = *this;
+    Vector3f v1 = dest;
+    v0.normalize();
+    v1.normalize();
 
-  //  f32 d = v0.dot(v1);
-  //  if (d >= 1.f) {
-  //    return Quaternion::Identity;
-  //  }
-  //  if (d < (F_PRECISION - 1.f)) {
-  //    if (fallbackAxis != Vector3f::Zero) {
-  //      q.fromAngleAxis(Math::piDegree, fallbackAxis);
-  //    } else {
-  //      Vector3f axis = Vector3f::UnitX.cross(*this);
-  //      if (axis.empty()) // pick another if colinear
-  //        axis = Vector3f::UnitY.cross(*this);
-  //      axis.normalize();
-  //      q.fromAngleAxis(Math::piDegree, axis);
-  //    }
-  //  } else {
-  //    f32 s = Math::sqrt((1.f+d)*2.f);
-  //    f32 invs = 1.f / s;
-  //    Vector3f c = v0.cross(v1);
-  //    q.x = c.x * invs;
-  //    q.y = c.y * invs;
-  //    q.z = c.z * invs;
-  //    q.w = s * 0.5f;
-  //    q.normalize();
-  //  }
-  //  return q;
-  //}
+    f32 d = v0.dot(v1);
+    if (d >= 1.f) {
+      return Quaternion::Identity;
+    }
+    if (d < (F_PRECISION - 1.f)) {
+      if (fallbackAxis != Vector3f::Zero) {
+        q.fromAngleAxis(Math::piDegree, fallbackAxis);
+      } else {
+        Vector3f axis = Vector3f::UnitX.cross(*this);
+        if (axis.empty()) // pick another if colinear
+          axis = Vector3f::UnitY.cross(*this);
+        axis.normalize();
+        q.fromAngleAxis(Math::piDegree, axis);
+      }
+    } else {
+      f32 s = Math::sqrt((1.f+d)*2.f);
+      f32 invs = 1.f / s;
+      Vector3f c = v0.cross(v1);
+      q.x = c.x * invs;
+      q.y = c.y * invs;
+      q.z = c.z * invs;
+      q.w = s * 0.5f;
+      q.normalize();
+    }
+    return q;
+  }
  f32 Vector3f::angleBetween(const Vector3f& vec) {
     f32 lenProduct = length() * vec.length();
     if(lenProduct < F_PRECISION)

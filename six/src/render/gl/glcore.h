@@ -9,4 +9,9 @@
 #else
 #endif
 
+namespace six {
+
+	String translateWGLError();
+}
+
 #endif //__SIX_GLCORE_H_INCLUDE__

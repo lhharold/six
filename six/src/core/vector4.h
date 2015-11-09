@@ -20,7 +20,8 @@ namespace six {
     Vector4f(f32 fx, f32 fy, f32 fz, f32 fw) : x(fx), y(fy), z(fz), w(fw) {}
     Vector4f(const Vector4f& vec) : x(vec.x), y(vec.y), z(vec.z), w(vec.w) {}
 
-    f32 operator[] (u8 i) {ASSERT(i <4); return value[i];}
+    inline f32 operator[] (u8 i) const {ASSERT(i <4); return value[i];}
+    inline f32& operator[] (u8 i) {ASSERT(i <4); return value[i];}
     const Vector4f& operator = (const Vector4f& vec) {x = vec.x; y = vec.y; z = vec.z; w = vec.w; return *this;}
     bool operator == (const Vector4f& vec) const {return F_EQUAL(x, vec.x) && F_EQUAL(y, vec.y) && F_EQUAL(z, vec.z) && F_EQUAL(w, vec.w);}
     bool operator != (const Vector4f& vec) const {return !operator ==(vec);}

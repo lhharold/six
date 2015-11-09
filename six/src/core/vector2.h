@@ -27,7 +27,8 @@ namespace six {
     Vector2f(f32 fx, f32 fy) : x(fx), y(fy) {}
     Vector2f(const Vector2f& vec) : x(vec.x), y(vec.y) {}
 
-    f32 operator[] (u8 i) {ASSERT(i <2); return value[i];}
+    f32 operator[] (u8 i) const {ASSERT(i <2); return value[i];}
+    f32& operator[] (u8 i) {ASSERT(i <2); return value[i];}
     const Vector2f& operator = (const Vector2f& vec) {x = vec.x; y = vec.y; return *this;}
     bool operator == (const Vector2f& vec) const {return F_EQUAL(x, vec.x) && F_EQUAL(y, vec.y);}
     bool operator != (const Vector2f& vec) const {return !operator ==(vec);}

@@ -302,7 +302,6 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -314,7 +313,6 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
@@ -565,6 +563,14 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\windowevent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\windowevent.h"
+				>
 			</File>
 		</Filter>
 		<File

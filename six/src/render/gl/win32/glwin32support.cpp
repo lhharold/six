@@ -110,4 +110,12 @@ namespace six {
 		return DefWindowProc(hwnd, umsg, wp, lp);
 	}
 	
+
+	String translateWGLError() {
+		int winError = GetLastError();
+		int i;
+		char errDesc[255];
+    i = FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, winError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) errDesc, 255, NULL);
+		return String(errDesc);
+	}
 }

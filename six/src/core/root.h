@@ -11,6 +11,8 @@ namespace six {
 		~Root();
 		RenderWindow* startup(bool autoWindow, const char* windowName = "Auto Window");
 		RenderWindow* createWindow(const char* name, s32 width, s32 height, bool fullScreen = false);
+    void startRun();
+    bool render();
 		void shutdown();
 
 		void installPlugin(Plugin* plugin);
@@ -32,6 +34,7 @@ namespace six {
 		union {
 			struct {
 				u32 mInit : 1;
+        u32 mRunning : 1;
 			};
 			u32 flag;
 		};

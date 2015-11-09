@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="opengl32.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -168,21 +169,6 @@
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\gl\win32\win32context.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\six\src\render\gl\win32\win32event.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\six\src\render\gl\win32\win32event.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"

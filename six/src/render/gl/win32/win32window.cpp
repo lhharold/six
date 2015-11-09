@@ -1,6 +1,6 @@
 #include "glcore.h"
 #include "win32window.h"
-#include "win32event.h"
+#include "windowevent.h"
 #include "glwin32support.h"
 #include "win32context.h"
 
@@ -36,6 +36,7 @@ namespace six {
     if(mHwnd != NULL)
       destroy();
     mHwnd = NULL;
+    DWORD dwStyle = WS_VISIBLE | WS_CLIPCHILDREN | WS_OVERLAPPED;
     DWORD dwStyleEx = 0;
     HWND hParent = NULL;
     HMENU hMenu = NULL;
@@ -52,11 +53,11 @@ namespace six {
 
     if(fullScreen)
       dwStyleEx |= WS_EX_TOPMOST;
-
+#if 0
     WNDCLASSEX wcex;
     wcex.cbSize        = sizeof(WNDCLASSEX);
     wcex.style         = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc   = Win32Event::_WndProc;
+    wcex.lpfnWndProc   = WindowEvent::_WndProc;
     wcex.cbClsExtra		 = 0;
     wcex.cbWndExtra		 = 0;
     wcex.hInstance		 = hInst;
@@ -64,11 +65,19 @@ namespace six {
     wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
     wcex.lpszMenuName  = NULL;
-    wcex.lpszClassName = "OpenGLWin32Window";
+    wcex.lpszClassName = "GLWin32Window";
     wcex.hIconSm       = NULL;
     RegisterClassEx(&wcex);
-    mHwnd = CreateWindowEx(dwStyleEx, "OpenGLWin32Window", name, WS_OVERLAPPED, mLeft, mTop,
+    mHwnd = CreateWindowEx(dwStyleEx, "OpenGLWin32Window", name, dwStyle, mLeft, mTop,
                            mWidth, mHeight, hParent, hMenu, hInst, this);
+#else
+    WNDCLASS wc = {CS_OWNDC, WindowEvent::_WndProc, 0, 0, hInst,
+				LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW),
+				(HBRUSH)GetStockObject(BLACK_BRUSH), NULL, "GLWin32Window" };
+			RegisterClass(&wc);
+			mHwnd = CreateWindowEx(dwStyleEx, "GLWin32Window", name,
+				dwStyle, mLeft, mTop, mWidth, mHeight, hParent, hMenu, hInst, this);
+#endif
 
     HDC oldHdc = wglGetCurrentDC();
     HGLRC oldContext = wglGetCurrentContext();
@@ -81,17 +90,52 @@ namespace six {
     mHeight = rc.bottom;
 
     mHDC = GetDC(mHwnd);
+#if 1
+    PIXELFORMATDESCRIPTOR pfd = {
+      sizeof(PIXELFORMATDESCRIPTOR),	// Size Of This Pixel Format Descriptor
+      1,				// Version Number
+      PFD_DRAW_TO_WINDOW |		// Format Must Support Window
+      PFD_SUPPORT_OPENGL |		// Format Must Support OpenGL
+      PFD_DOUBLEBUFFER,		// Must Support Double Buffering
+      PFD_TYPE_RGBA,			// Request An RGBA Format
+      32,						// Select Our Color Depth
+      0, 0, 0, 0, 0, 0,		// Color Bits Ignored
+      0,				// No Alpha Buffer
+      0,				// Shift Bit Ignored
+      0,				// No Accumulation Buffer
+      0, 0, 0, 0,			// Accumulation Bits Ignored
+      24,				// Z-Buffer (Depth Buffer)
+      /*stencilBuffer ? 1 :*/ 0,		// Stencil Buffer Depth
+      0,				// No Auxiliary Buffer
+      PFD_MAIN_PLANE,			// Main Drawing Layer
+      0,				// Reserved
+      0, 0, 0				// Layer Masks Ignored
+    };
+
+    GLuint PixelFormat = ChoosePixelFormat(mHDC, &pfd);
+    // choose pixelformat
+    if (PixelFormat == 0) {
+      ASSERT(0);
+    }
+
+    if (!SetPixelFormat(mHDC, PixelFormat, &pfd)) {
+      ASSERT(0);
+    }
+#endif
+
     mGlrc = wglCreateContext(mHDC);
     if(!mGlrc) {
-      //translateWGLError();
+      translateWGLError();
       ASSERT(0 && "Win32Window::create - wglCreateContext() failed.");
     }
     if(oldContext && oldContext != mGlrc) {
       if(!wglShareLists(oldContext, mGlrc))
         ASSERT(0 && "Win32Window::create - wglShareLists() failed.");
     }
-    if(!wglMakeCurrent(mHDC, mGlrc))
+    if(!wglMakeCurrent(mHDC, mGlrc)) {
+      translateWGLError();
       ASSERT(0 && "Win32Window::create - wglMakeCurrent() failed.");
+    }
 
     if(oldContext && oldContext != mGlrc) {
       if(!wglMakeCurrent(oldHdc, oldContext))
