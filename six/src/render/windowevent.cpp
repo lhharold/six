@@ -3,7 +3,7 @@
 
 namespace six {
   void WindowEvent::messagePump() {
-#ifdef OS_PLATFORM == OS_PLATFORM_WIN32
+#if OS_PLATFORM == OS_PLATFORM_WIN32
     MSG  msg;
     while( PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
       TranslateMessage(&msg);
@@ -11,7 +11,7 @@ namespace six {
     }
 #endif
   }
-#ifdef OS_PLATFORM == OS_PLATFORM_WIN32
+#if OS_PLATFORM == OS_PLATFORM_WIN32
   LRESULT CALLBACK WindowEvent::_WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_CREATE) {
       SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)(((LPCREATESTRUCT)lParam)->lpCreateParams));

@@ -3,15 +3,19 @@
 
 namespace six {
 
+  class RenderTarget;
 	class Viewport {
 	public:
 		void updateDimensions();
+    bool isAutoUpdate() const {return mIsAutoUpdate;}
+    RenderTarget* getTarget() const {return mTarget;}
+		void update();
+		u32 getRenderFacesNum() const;
+		u32 getRenderBatchesNum() const;
 #if 0
 		Viewport(Camera* camera, RenderTarget* target, f32 left, f32 top, f32 width, f32 height, int zOrder);
 		virtual ~Viewport();
-		void update();
 		void clear(u32 buffers = FBT_COLOUR | FBT_DEPTH, const Color& color = Color::Black, f32 depth = 1.f, u16 stencil = 0);
-		RenderTarget getTarget() const;
 		Camera* getCamera() const;
 		void setCamera(Camera* cam);
 		int getZOrder() const;
@@ -35,13 +39,10 @@ namespace six {
 		bool getClearEveryFrame() const;
 		u32 getClearBuffers() const;
 		void setAutoUpdated(bool autoupdate);
-		bool isAutoUpdated() const;
 		void setMaterialScheme(const String& schemeName) { mMaterialScheme = schemeName; }
 		const String& getMaterialScheme() const { return mMaterialScheme; }
 		bool _isUpdated() const;
 		void _clearUpdatedFlag();
-		u32 _getNumRenderFaces() const;
-		u32 _getNumRenderBatches() const;
 		void setOverlaysEnabled(bool enabled);
 		bool getOverlaysEnabled() const;
 		void setSkyEnabled(bool enabled);
@@ -57,7 +58,6 @@ namespace six {
 		void pointOrientedToScreen(f32 orientedX, f32 orientedY, int orientationMode, f32& screenX, f32& screenY);
 	protected:
 		Camera* camera;
-		RenderTarget* mTarget;
 		f32 mLeft, mTop, mWidth, mHeight;
 		int mRealLeft, mRealTop, mRealWidth, mRealHeight;
 		int mZOrder;
@@ -74,8 +74,9 @@ namespace six {
 		String mMaterialSchemeName;
 		OrientationMode mOrientationMode;
 		static OrientationMode mDefaultOrientationMode;
-		bool mIsAutoUpdated;
 #endif
+		RenderTarget* mTarget;
+		bool mIsAutoUpdate;
 	};
 }
 #endif //__SIX_RENDERVIEWPORT_H_INCLUDE__

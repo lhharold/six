@@ -36,7 +36,7 @@ namespace six {
     if(mHwnd != NULL)
       destroy();
     mHwnd = NULL;
-    DWORD dwStyle = WS_VISIBLE | WS_CLIPCHILDREN | WS_OVERLAPPED;
+    DWORD dwStyle = WS_VISIBLE | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW;
     DWORD dwStyleEx = 0;
     HWND hParent = NULL;
     HMENU hMenu = NULL;
@@ -142,7 +142,7 @@ namespace six {
         ASSERT(0 && "Win32Window::create - wglMakeCurrent() failed.");
     }
 
-    mContext = new Win32Context(mHDC, mGlrc);
+    mContext = NEW Win32Context(mHDC, mGlrc);
     mActive = true;
     setHidden(false);
   }

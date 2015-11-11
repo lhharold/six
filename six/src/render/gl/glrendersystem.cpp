@@ -37,13 +37,12 @@ namespace six {
 			return NULL;
 		}
 		RenderWindow* window = mGLSupport->newWindow(windowName, width, height, fullScreen);
-		RenderWindow* baseWindow = (RenderWindow*)window;
-		attachRenderTarget(baseWindow);
+		attachRenderTarget(*window);
 
 		if(!mGLInitialised) {
 			initialiseContext(window);
 		}
-		return baseWindow;
+		return window;
 	}
 
 	void GLRenderSystem::shutdown() {

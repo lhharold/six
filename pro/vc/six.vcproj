@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render;..\..\six\src\render\gl"
+				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render;..\..\six\src\render\gl;..\..\six\src\platform;..\..\six\src\platform\win32"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -494,6 +494,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\six\src\render\framelistener.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\framelistener.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\render\rendersystem.cpp"
 				>
 			</File>
@@ -572,6 +580,26 @@
 				RelativePath="..\..\six\src\render\windowevent.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="platform"
+			>
+			<File
+				RelativePath="..\..\six\src\platform\timer.h"
+				>
+			</File>
+			<Filter
+				Name="win32"
+				>
+				<File
+					RelativePath="..\..\six\src\platform\win32\timer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\platform\win32\timerimpl.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\..\six\src\buildsetting.h"

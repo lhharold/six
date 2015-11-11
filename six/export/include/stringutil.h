@@ -3,11 +3,6 @@
 
 namespace six {
 
-  template<typename T>
-  class Vector : public std::vector<T> {};
-  template<typename K, typename T>
-  class Map : public std::map<K, T> {};
-
   class StringUtil {
   public:
     static void trim(String& str, bool left = true, bool right = true);

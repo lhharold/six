@@ -1,13 +1,13 @@
 #include "core.h"
+#include "root.h"
 
 namespace six {
-#if 0
-	RenderTarget::RenderTarget(const char* name)
-		: mName(name)
-		, mPriority(DEFAULT_RENDERTARGET_GROUP)
+	RenderTarget::RenderTarget()
+		: mPriority(DEFAULT_RENDERTARGET_GROUP)
 		, mActive(false)
 		, mAutoUpdate(true)
 	{
+    mTimer = Root::get().getTimer();
 		resetStatistics();
 	}
 
@@ -25,6 +25,7 @@ namespace six {
 		if(swapbuffers)
 			swapBuffers();
 	}
+#if 0
 
 	void RenderTarget::addViewport(Camera* cam, int zOrder /* = 0 */, f32 left /* = 0.f */, f32 top /* = 0.f */, f32 width /* = 1.f */, f32 height /* = 1.f */) {
 		ViewportList::iterator i = mViewportList.find(zOrder);
@@ -36,6 +37,7 @@ namespace six {
 		fireViewportAdded(viewport);
 		return viewport;
 	}
+#endif
 
 	u32 RenderTarget::getViewportNum() const {
 		return (u32)mViewportList.size();
@@ -73,15 +75,15 @@ namespace six {
         mStats.bestFrameTime = 999999;
         mStats.worstFrameTime = 0;
 
-        //mLastTime = mTimer->getMilliseconds();
-        //mLastSecond = mLastTime;
+        mLastTime = mTimer->getMilliseconds();
+        mLastSecond = mLastTime;
         mFrameCount = 0;
 	}
 	void RenderTarget::addListener(RenderTargetListener* listener) {
 		mListeners.push_back(listener);
 	}
 	void RenderTarget::removeListener(RenderTargetListener* listener) {
-		RenderTargetListenerList::iterator i = std::find(mListeners.begin(), mListeners.end, listener);
+		RenderTargetListenerList::iterator i = std::find(mListeners.begin(), mListeners.end(), listener);
 		if(i != mListeners.end()) {
 			mListeners.erase(i);
 		}
@@ -115,7 +117,7 @@ namespace six {
 	void RenderTarget::_updateAutoUpdateViewports(bool updateStatistics /* = true */) {
 		for(ViewportList::iterator i = mViewportList.begin(), n = mViewportList.end(); i != n; ++i) {
 			Viewport* vp = i->second;
-			if(vp->isAutoUpdated()) {
+			if(vp->isAutoUpdate()) {
 				_updateViewport(vp, updateStatistics);
 			}
 		}
@@ -153,28 +155,28 @@ namespace six {
 		}
 	}
 	void RenderTarget::fireViewportPreUpdate(Viewport* vp) {
-		RenderTargetEvent evt;
+		RenderTargetViewportEvent evt;
 		evt.source = vp;
 		for(RenderTargetListenerList::iterator i = mListeners.begin(), n = mListeners.end(); i != n; ++i) {
 			(*i)->preViewportUpdate(evt);
 		}
 	}
 	void RenderTarget::fireViewportPostUpdate(Viewport* vp) {
-		RenderTargetEvent evt;
+		RenderTargetViewportEvent evt;
 		evt.source = vp;
 		for(RenderTargetListenerList::iterator i = mListeners.begin(), n = mListeners.end(); i != n; ++i) {
 			(*i)->postViewportUpdate(evt);
 		}
 	}
 	void RenderTarget::fireViewportAdded(Viewport* vp) {
-		RenderTargetEvent evt;
+		RenderTargetViewportEvent evt;
 		evt.source = vp;
 		for(RenderTargetListenerList::iterator i = mListeners.begin(), n = mListeners.end(); i != n; ++i) {
 			(*i)->viewportAdded(evt);
 		}
 	}
 	void RenderTarget::fireViewportRemoved(Viewport* vp) {
-		RenderTargetEvent evt;
+		RenderTargetViewportEvent evt;
 		evt.source = vp;
 		for(RenderTargetListenerList::iterator i = mListeners.begin(), n = mListeners.end(); i != n; ++i) {
 			(*i)->viewportRemoved(evt);
@@ -187,5 +189,4 @@ namespace six {
 			(*i)->postRenderTargetUpdate(evt);
 		}
 	}
-#endif
 }

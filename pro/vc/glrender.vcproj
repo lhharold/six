@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render;..\..\six\src\render\gl"
+				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render;..\..\six\src\render\gl;..\..\six\src\platform;..\..\six\src\platform\win32"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

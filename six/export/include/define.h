@@ -21,6 +21,7 @@
 // system include
 #if OS_PLATFORM == OS_PLATFORM_WIN32
 #include <windows.h>
+#include <time.h>
 #endif
 
 // c/c++ standard lib include
@@ -33,11 +34,16 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <set>
+#include <deque>
 #include <map>
 
 using std::string;
 using std::vector;
 using std::map;
+using std::multimap;
+using std::set;
+using std::deque;
 
 namespace six {
 	typedef unsigned char		u8;
@@ -57,6 +63,17 @@ namespace six {
 	typedef double				  f64;
 
 	typedef string String;
+
+  template<typename T>
+  class Vector : public std::vector<T> {};
+  template<typename K, typename T>
+  class Map : public std::map<K, T> {};
+  template<typename K, typename T>
+  class Mutimap : public std::multimap<K, T> {};
+  template<typename T>
+  class Set : public std::set<T> {};
+  template<typename T>
+  class Deque : public std::deque<T> {};
 
 	#define NEW new
 	#define SAFE_DEL(p)			do{ if (p) { delete (p); (p) = NULL; } }while(0)

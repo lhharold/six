@@ -18,6 +18,8 @@
 #include "quaternion.h"
 #include "matrix3.h"
 
+#include "timer.h"
+
 #include "stringutil.h"
 #include "singleton.h"
 #include "plugin.h"

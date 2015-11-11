@@ -10,57 +10,56 @@
 namespace six {
 
 	class RenderTarget {
-        struct FrameStats {
-            f32 lastFPS;
-            f32 avgFPS;
-            f32 bestFPS;
-            f32 worstFPS;
-            u32 bestFrameTime;
-            u32 worstFrameTime;
-            u32 triangleCount;
-            u32 batchCount;
-        };
+    struct FrameStats {
+      f32 lastFPS;
+      f32 avgFPS;
+      f32 bestFPS;
+      f32 worstFPS;
+      u32 bestFrameTime;
+      u32 worstFrameTime;
+      u32 triangleCount;
+      u32 batchCount;
+    };
 	public:
-		RenderTarget() {}
-    virtual ~RenderTarget(){}
+		RenderTarget();
+    virtual ~RenderTarget();
 		const char* getName() const {return mName.c_str();}
 		virtual u32 getWidth(void) const {return mWidth;}
 		virtual u32 getHeight(void) const {return mHeight;}
 		virtual void setActive(bool active) {mActive = active;}
 		virtual bool isActive() const {return mActive;}
     virtual void getUserData(const char* name, void* data) {}
+		virtual void setPriority(u8 priority) {mPriority = priority;}
+		virtual u8 getPriority() const {return mPriority;}
+		virtual bool isPrimary() const {return false;}
+		virtual void setAutoUpdate(bool autoUpdate) {mAutoUpdate = autoUpdate;}
+		virtual bool isAutoUpdate()const {return mAutoUpdate;}
+		virtual void update(bool swapbuffers = true);
+		virtual void resetStatistics();
+		virtual const FrameStats& getStatistics() const {return mStats;}
+		virtual void swapBuffers() {}
 #if 0
 		virtual u32 getColourDepth(void) const {return mColorDepth;}
-		virtual void update(bool swapbuffers = true);
-		virtual void swapBuffers() {}
 		virtual Viewport* addViewport(Camera* cam, int zOrder = 0, f32 left = 0.f, f32 top = 0.f, f32 width = 1.f, f32 height = 1.f);
-		virtual u32 getViewportNum() const;
-		virtual Viewport* getViewport(u32 index);
-		virtual void removeViewport(int zOrder);
-		virtual void removeAllViewport();
-		virtual const FrameStats& getStatistics() const {return mStats;}
-		virtual void resetStatistics();
-		virtual void addListener(RenderTargetListener* listener);
-		virtual void removeListener(RenderTargetListener* listener);
-		virtual void removeAllListener();
-		virtual void setPriority(u8 priority) {mPriority = priority};
-		virtual u8 getPriority() {return mPriority;}
-		virtual void setAutoUpdate(bool autoUpdate) {mAutoUpdate = autoUpdate;}
-		virtual void isAutoUpdate()const {return mAutoUpdate;}
 		//virtual void copyContentsToMemory()
 		//virtual void writeContentsToFile();
 		//virtual const char* writeContentsToTimestampedFile()
 		virtual bool requireTextureFlipping() = 0;
-		virtual bool isPrimary() const {return false;}
 
+#endif
+		virtual u32 getViewportNum() const;
+		virtual Viewport* getViewport(u32 index);
+		virtual void removeViewport(int zOrder);
+		virtual void removeAllViewport();
+		virtual void addListener(RenderTargetListener* listener);
+		virtual void removeListener(RenderTargetListener* listener);
+		virtual void removeAllListener();
 		virtual void _beginUpdate();
 		virtual void _updateViewport(int zOrder, bool updateStatistics = true);
 		virtual void _updateViewport(Viewport* viewport, bool updateStatistics = true);
 		virtual void _updateAutoUpdateViewports(bool updateStatistics = true);
 		virtual void _endUpdate();
-#endif
 	protected:
-#if 0
 		void updateStats();
 		virtual void firePreUpdate();
 		virtual void firePostUpdate();
@@ -68,30 +67,30 @@ namespace six {
 		virtual void fireViewportPostUpdate(Viewport* vp);
 		virtual void fireViewportAdded(Viewport* vp);
 		virtual void fireViewportRemoved(Viewport* vp);
-#endif
 
 		String mName;
 		u32 mWidth;
 		u32 mHeight;
 		bool mActive;
+		u8 mPriority;
+		bool mAutoUpdate;
+		FrameStats mStats;
+		u32 mFrameCount;
+		u64 mLastSecond;
+		u64 mLastTime;
+    Timer* mTimer;
 
 		typedef Map<int, Viewport*> ViewportList;
 		ViewportList mViewportList;
 #if 0
-		u8 mPriority;
 		u32 mColorDepth;
 		bool mIsDepthBuffered;
-		FrameStats mStats;
+#endif
 
-		u32 mLastSecond;
-		u32 mLastTime;
-		u32 mFrameCount;
-		bool mAutoUpdate;
 		
 
 		typedef Vector<RenderTargetListener*> RenderTargetListenerList;
 		RenderTargetListenerList mListeners;
-#endif
 	};
 
 }

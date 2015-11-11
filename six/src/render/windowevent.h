@@ -5,7 +5,7 @@ namespace six {
 	class WindowEvent {
 	public:
     static void messagePump();
-#ifdef OS_PLATFORM == OS_PLATFORM_WIN32
+#if OS_PLATFORM == OS_PLATFORM_WIN32
     static LRESULT CALLBACK _WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 	};
