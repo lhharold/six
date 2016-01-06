@@ -12,7 +12,7 @@
 namespace six {
 	class StaticPluginLoader {
 	public:
-		StaticPluginLoader() {}
+    StaticPluginLoader() : mGLPlugin(NULL) {}
 		void load();
 		void unload();
 	protected:

@@ -126,27 +126,25 @@ namespace six {
 		firePostUpdate();
 		updateStats();
 	}
-    void RenderTarget::updateStats(void) {
-#if 0
-        ++mFrameCount;
-        u32 thisTime = mTimer->getMilliseconds();
-        u32 frameTime = thisTime - mLastTime;
-        mLastTime = thisTime;
-        mStats.bestFrameTime = std::min(mStats.bestFrameTime, frameTime);
-        mStats.worstFrameTime = std::max(mStats.worstFrameTime, frameTime);
-        if (thisTime - mLastSecond > 1000) { 
-            mStats.lastFPS = (f32)mFrameCount / (f32)(thisTime - mLastSecond) * 1000.0f;
-            if (mStats.avgFPS == 0)
-                mStats.avgFPS = mStats.lastFPS;
-            else
-                mStats.avgFPS = (mStats.avgFPS + mStats.lastFPS) / 2; // not strictly correct, but good enough
-            mStats.bestFPS = std::max(mStats.bestFPS, mStats.lastFPS);
-            mStats.worstFPS = std::min(mStats.worstFPS, mStats.lastFPS);
-            mLastSecond = thisTime ;
-            mFrameCount  = 0;
-        }
-#endif
+  void RenderTarget::updateStats(void) {
+    ++mFrameCount;
+    u32 thisTime = mTimer->getMilliseconds();
+    u32 frameTime = thisTime - mLastTime;
+    mLastTime = thisTime;
+    mStats.bestFrameTime = MIN(mStats.bestFrameTime, frameTime);
+    mStats.worstFrameTime = MAX(mStats.worstFrameTime, frameTime);
+    if (thisTime - mLastSecond > 1000) { 
+      mStats.lastFPS = (f32)mFrameCount / (f32)(thisTime - mLastSecond) * 1000.0f;
+      if (mStats.avgFPS == 0)
+        mStats.avgFPS = mStats.lastFPS;
+      else
+        mStats.avgFPS = (mStats.avgFPS + mStats.lastFPS) / 2; // not strictly correct, but good enough
+      mStats.bestFPS = MAX(mStats.bestFPS, mStats.lastFPS);
+      mStats.worstFPS = MIN(mStats.worstFPS, mStats.lastFPS);
+      mLastSecond = thisTime ;
+      mFrameCount  = 0;
     }
+  }
 	void RenderTarget::firePreUpdate() {
 		RenderTargetEvent evt;
 		evt.source = this;

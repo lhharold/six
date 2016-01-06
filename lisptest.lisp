@@ -1,3 +1,5 @@
+(in-package :CL-USER)
+
 (defun hello-world () (format t "hello, world!!!"))
 
 (defvar *db* nil)
@@ -54,13 +56,23 @@
 ;;   #'(lambda (cd) (equal (getf cd :artist) artist)))
 (defun select (selector-fn)
   (remove-if-not selector-fn *db*))
-(defun where (&key title artist rating (ripped nil ripped-p))
-  #'(lambda (cd)
-      (and
-       (if title  (equal (getf cd :title) title) t)
-       (if artist (equal (getf cd :artist) artist) t)
-       (if rating (equal (getf cd :rating) rating) t)
-       (if ripped-p (equal (getf cd :ripped) ripped) t))))
+;; (defun where (&key title artist rating (ripped nil ripped-p))
+;;   #'(lambda (cd)
+;;       (and
+;;        (if title  (equal (getf cd :title) title) t)
+;;        (if artist (equal (getf cd :artist) artist) t)
+;;        (if rating (equal (getf cd :rating) rating) t)
+;;        (if ripped-p (equal (getf cd :ripped) ripped) t))))
+(defun make-comparison-expr (field value)
+  `(equal (getf cd ,field) ,value))
+
+(defun make-comaprisons-list (fields)
+  (loop while fields
+        collecting (make-comparison-expr (pop fields) (pop fields))))
+
+(defmacro where (&rest clauses)
+  `#'(lambda (cd) (and ,@(make-comaprisons-list clauses))))
+
 (defun update (selector-fn &key title artist rating (ripped nil ripped-p))
   (setf *db*
         (mapcar
@@ -73,3 +85,44 @@
              row) *db*)))
 (defun delete-row (selector-fn)
   (setf *db* (remove-if selector-fn *db*)))
+
+
+
+
+;;*************************************
+(defvar *test-name* nil)
+(defmacro deftest (name parameters &body body)
+  `(defun ,name ,parameters
+     (let ((*test-name* (append *test-name* (list ',name))))
+       ,@body)))
+(defmacro with-gensyms2 ((&rest names) &body body)
+  `(let ,(loop for n in names collect `(,n (gensym)))
+     ,@body))
+(defmacro combine-results (&body forms)
+  (with-gensyms2 (result)
+    `(let ((,result t))
+           ,@(loop for f in forms collect `(unless ,f (setf ,result nil)))
+           ,result)))
+(defmacro check (&body forms)
+  `(combine-results
+     ,@(loop for f in forms collect `(report-result ,f ',f))))
+(defun report-result (result form)
+  (format t "~:[FAIL~;pass~] ... ~a: ~a~%" result *test-name* form)
+  result)
+(deftest test-+ ()
+  (check
+    (= (+ 1 2) 3)
+    (= (+ 1 2 3) 6)
+    (= (+ -1 -3) -4)))
+
+(deftest test-*()
+  (check
+    (= (* 2 2) 4)
+    (= (* 3 5) 14)))
+(deftest test-arithmetic ()
+  (combine-results
+    (test-+)
+    (test-*)))
+(deftest test-math ()
+  (test-arithmetic))
+

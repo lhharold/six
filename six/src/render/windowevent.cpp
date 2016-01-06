@@ -25,6 +25,7 @@ namespace six {
     {
     case WM_ACTIVATE:
     {
+#ifndef _DEBUG
       bool active = LOWORD(wParam) != WA_INACTIVE;
       if(active) {
         win->setActive(true);
@@ -32,6 +33,7 @@ namespace six {
         if(win->isDeactivatedOnFocusChange())
           win->setActive(false);
       }
+#endif
       //notify listener
     }
     break;

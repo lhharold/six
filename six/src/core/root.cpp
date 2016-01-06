@@ -148,8 +148,9 @@ namespace six {
 		mPlugins.push_back(plugin);
 		plugin->install();
 
-		if(mInit) {
+		if(!mInit) {
 			plugin->initialise();
+      mInit = true;
 		}
 	}
 	void Root::unstallPlugin(Plugin* plugin) {

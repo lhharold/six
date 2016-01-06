@@ -30,6 +30,7 @@
 #include "filestream.h"
 #include "filesystem.h"
 
+#include "camera.h"
 #include "viewport.h"
 #include "rendertargetlistener.h"
 #include "rendertarget.h"

@@ -78,7 +78,7 @@ namespace six {
     f32 normalize();
     Vector3f perpendicular() const; //´¹Ö±
     void resize(f32 len);
-    //Quaternion getRotationTo(const Vector3f& vec, const Vector3f& fallbackAxis = Vector3f::Zero);
+    Quaternion getRotationTo(const Vector3f& vec, const Vector3f& fallbackAxis = Vector3f::Zero);
     f32 angleBetween(const Vector3f& vec);
   };
 }

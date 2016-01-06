@@ -3,9 +3,12 @@
 
 namespace six {
 
+  class Camera;
   class RenderTarget;
 	class Viewport {
 	public:
+		Viewport(Camera* camera, RenderTarget* target, f32 left, f32 top, f32 width, f32 height, int zOrder);
+		virtual ~Viewport();
 		void updateDimensions();
     bool isAutoUpdate() const {return mIsAutoUpdate;}
     RenderTarget* getTarget() const {return mTarget;}
@@ -13,8 +16,6 @@ namespace six {
 		u32 getRenderFacesNum() const;
 		u32 getRenderBatchesNum() const;
 #if 0
-		Viewport(Camera* camera, RenderTarget* target, f32 left, f32 top, f32 width, f32 height, int zOrder);
-		virtual ~Viewport();
 		void clear(u32 buffers = FBT_COLOUR | FBT_DEPTH, const Color& color = Color::Black, f32 depth = 1.f, u16 stencil = 0);
 		Camera* getCamera() const;
 		void setCamera(Camera* cam);
@@ -57,11 +58,6 @@ namespace six {
 		void pointOrientedToScreen(const Vector2& v, int orientationMode, Vector2& outv);
 		void pointOrientedToScreen(f32 orientedX, f32 orientedY, int orientationMode, f32& screenX, f32& screenY);
 	protected:
-		Camera* camera;
-		f32 mLeft, mTop, mWidth, mHeight;
-		int mRealLeft, mRealTop, mRealWidth, mRealHeight;
-		int mZOrder;
-		Color mBackgroundColor;
 		u32 mClearBuffers;
 		bool mClearEveryFrame;
 		bool mUpdated;
@@ -75,8 +71,20 @@ namespace six {
 		OrientationMode mOrientationMode;
 		static OrientationMode mDefaultOrientationMode;
 #endif
+		Camera* mCamera;
 		RenderTarget* mTarget;
-		bool mIsAutoUpdate;
+		f32 mLeft, mTop, mWidth, mHeight;
+		int mZOrder;
+    f32 mDepthClearValue;
+		Color mBackgroundColor;
+		int mRealLeft, mRealTop, mRealWidth, mRealHeight;
+    union {
+      struct {
+        u32 mIsAutoUpdate : 1;
+        u32 mClearEveryFrame : 1;
+      };
+      u32 flag;
+    };
 	};
 }
 #endif //__SIX_RENDERVIEWPORT_H_INCLUDE__
