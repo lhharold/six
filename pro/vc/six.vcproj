@@ -315,13 +315,6 @@
 			<File
 				RelativePath="..\..\six\src\core\matrix4.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\matrix4.h"
@@ -474,6 +467,14 @@
 			Name="render"
 			>
 			<File
+				RelativePath="..\..\six\src\render\camera.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\camera.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\render\common.h"
 				>
 				<FileConfiguration
@@ -547,6 +548,14 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\scenemanager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\scenemanager.h"
+				>
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\viewport.cpp"

@@ -4,7 +4,11 @@ using namespace six;
 #if 1
 int main(int argn, const char* argv[]) {
   Root* root = NEW Root();
-  root->startup(true);
+  RenderWindow* window = root->startup(true);
+  SceneManager* sceneMgr = root->createSceneManager();
+  Camera* mainCamera = sceneMgr->createCamera();
+  Viewport* vp = window->addViewport(mainCamera);
+  vp->setBackgroundColor(Color::Red);
   root->startRun();
   return 0;
 }

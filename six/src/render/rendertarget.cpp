@@ -4,9 +4,9 @@
 namespace six {
 	RenderTarget::RenderTarget()
 		: mPriority(DEFAULT_RENDERTARGET_GROUP)
-		, mActive(false)
-		, mAutoUpdate(true)
+    , flags(0)
 	{
+    mAutoUpdate = true;
     mTimer = Root::get().getTimer();
 		resetStatistics();
 	}
@@ -25,19 +25,16 @@ namespace six {
 		if(swapbuffers)
 			swapBuffers();
 	}
-#if 0
-
-	void RenderTarget::addViewport(Camera* cam, int zOrder /* = 0 */, f32 left /* = 0.f */, f32 top /* = 0.f */, f32 width /* = 1.f */, f32 height /* = 1.f */) {
+	Viewport* RenderTarget::addViewport(Camera* cam, int zOrder /* = 0 */, f32 left /* = 0.f */, f32 top /* = 0.f */, f32 width /* = 1.f */, f32 height /* = 1.f */) {
 		ViewportList::iterator i = mViewportList.find(zOrder);
 		if(i != mViewportList.end()) {
-			ASSERT(0 && "RenderTarget::addViewport - Cant create another viewport with the same Z-Order")
+			ASSERT(0 && "RenderTarget::addViewport - Cant create another viewport with the same Z-Order");
 		}
 		Viewport* viewport = NEW Viewport(cam, this, left, top, width, height, zOrder);
 		mViewportList[zOrder] = viewport;
 		fireViewportAdded(viewport);
 		return viewport;
 	}
-#endif
 
 	u32 RenderTarget::getViewportNum() const {
 		return (u32)mViewportList.size();
@@ -128,8 +125,8 @@ namespace six {
 	}
   void RenderTarget::updateStats(void) {
     ++mFrameCount;
-    u32 thisTime = mTimer->getMilliseconds();
-    u32 frameTime = thisTime - mLastTime;
+    u64 thisTime = mTimer->getMilliseconds();
+    u64 frameTime = thisTime - mLastTime;
     mLastTime = thisTime;
     mStats.bestFrameTime = MIN(mStats.bestFrameTime, frameTime);
     mStats.worstFrameTime = MAX(mStats.worstFrameTime, frameTime);

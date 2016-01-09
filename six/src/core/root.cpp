@@ -5,6 +5,69 @@
 
 namespace six {
 	template<> Root* Singleton<Root>::sInstance = NULL;
+  //////////////////////////////////////////////////////////////////////////
+  bool Root::_frameStart() {
+    FrameEvent evt;
+    getFrameEvent(FET_START, evt);
+    return _frameStart(evt);
+  }
+  bool Root::_frameStart(const FrameEvent& evt) {
+    for(Set<FrameListener*>::iterator i = mRemoveFrameListner.begin(), iend = mRemoveFrameListner.end(); i != iend; ++i) {
+      mFrameListener.erase(*i);
+    }
+    mRemoveFrameListner.clear();
+    for(Set<FrameListener*>::iterator i = mFrameListener.begin(), iend = mFrameListener.end(); i != iend; ++i) {
+      if(!(*i)->frameStart(evt)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  bool Root::_frameRender() {
+    FrameEvent evt;
+    getFrameEvent(FET_RENDER, evt);
+    return _frameRender(evt);
+  }
+  bool Root::_frameRender(const FrameEvent& evt) {
+    ++mFrameCount;
+    for(Set<FrameListener*>::iterator i = mRemoveFrameListner.begin(), iend = mRemoveFrameListner.end(); i != iend; ++i) {
+      mFrameListener.erase(*i);
+    }
+    mRemoveFrameListner.clear();
+    for(Set<FrameListener*>::iterator i = mFrameListener.begin(), iend = mFrameListener.end(); i != iend; ++i) {
+      if(!(*i)->frameRender(evt)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  bool Root::_frameEnd() {
+    FrameEvent evt;
+    getFrameEvent(FET_END, evt);
+    return _frameEnd(evt);
+  }
+  bool Root::_frameEnd(const FrameEvent& evt) {
+    for(Set<FrameListener*>::iterator i = mRemoveFrameListner.begin(), iend = mRemoveFrameListner.end(); i != iend; ++i) {
+      mFrameListener.erase(*i);
+    }
+    mRemoveFrameListner.clear();
+    bool ret = true;
+    for(Set<FrameListener*>::iterator i = mFrameListener.begin(), iend = mFrameListener.end(); i != iend; ++i) {
+      if(!(*i)->frameEnd(evt)) {
+        ret = false;
+        break;
+      }
+    }
+    //clear buffers add code here
+    return ret;
+  }
+  bool Root::_updateAllRenderTargets() {
+    mRender->update();
+    bool ret = _frameRender();
+    mRender->swapBuffer();
+    return ret;
+  }
+  //////////////////////////////////////////////////////////////////////////
 	Root::Root() 
 		: mRender(NULL)
 		, mAutoWindow(NULL)
@@ -79,67 +142,6 @@ namespace six {
 		evt.timeSinceLastEvent = calcEventTime(now, FET_NORMAL);
 		evt.timeSinceLastFrame = calcEventTime(now, type);
   }
-  bool Root::_frameStart() {
-    FrameEvent evt;
-    getFrameEvent(FET_START, evt);
-    return _frameStart(evt);
-  }
-  bool Root::_frameStart(const FrameEvent& evt) {
-    for(Set<FrameListener*>::iterator i = mRemoveFrameListner.begin(), iend = mRemoveFrameListner.end(); i != iend; ++i) {
-      mFrameListener.erase(*i);
-    }
-    mRemoveFrameListner.clear();
-    for(Set<FrameListener*>::iterator i = mFrameListener.begin(), iend = mFrameListener.end(); i != iend; ++i) {
-      if(!(*i)->frameStart(evt)) {
-        return false;
-      }
-    }
-    return true;
-  }
-  bool Root::_frameRender() {
-    FrameEvent evt;
-    getFrameEvent(FET_RENDER, evt);
-    return _frameRender(evt);
-  }
-  bool Root::_frameRender(const FrameEvent& evt) {
-    ++mFrameCount;
-    for(Set<FrameListener*>::iterator i = mRemoveFrameListner.begin(), iend = mRemoveFrameListner.end(); i != iend; ++i) {
-      mFrameListener.erase(*i);
-    }
-    mRemoveFrameListner.clear();
-    for(Set<FrameListener*>::iterator i = mFrameListener.begin(), iend = mFrameListener.end(); i != iend; ++i) {
-      if(!(*i)->frameRender(evt)) {
-        return false;
-      }
-    }
-    return true;
-  }
-  bool Root::_frameEnd() {
-    FrameEvent evt;
-    getFrameEvent(FET_END, evt);
-    return _frameEnd(evt);
-  }
-  bool Root::_frameEnd(const FrameEvent& evt) {
-    for(Set<FrameListener*>::iterator i = mRemoveFrameListner.begin(), iend = mRemoveFrameListner.end(); i != iend; ++i) {
-      mFrameListener.erase(*i);
-    }
-    mRemoveFrameListner.clear();
-    bool ret = true;
-    for(Set<FrameListener*>::iterator i = mFrameListener.begin(), iend = mFrameListener.end(); i != iend; ++i) {
-      if(!(*i)->frameEnd(evt)) {
-        ret = false;
-        break;
-      }
-    }
-    //clear buffers add code here
-    return ret;
-  }
-  bool Root::_updateAllRenderTargets() {
-    mRender->update();
-    bool ret = _frameRender();
-    mRender->swapBuffer();
-    return ret;
-  }
 	void Root::shutdown() {
 		if(mAutoWindow)
 			mAutoWindow = mAutoWindow;
@@ -171,4 +173,7 @@ namespace six {
 	RenderSystem* Root::getRenderSystem() {
 		return mRender;
 	}
+  SceneManager* Root::createSceneManager() {
+    return NEW SceneManager();
+  }
 }

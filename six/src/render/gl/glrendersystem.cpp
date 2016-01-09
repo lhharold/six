@@ -10,12 +10,16 @@
 	#endif
 #endif
 
+static const char* USERDATA_GLCONTEXT = "GLCONTEXT";
 
 namespace six {
 	GLRenderSystem::GLRenderSystem() 
 		: mFlags(0) 
 		, mMainContext(NULL)
 		, mActiveContext(NULL)
+    , mColorWrite(0)
+    , mDepthWrite(true)
+    , mStencilMask(false)
 	{
 		mGLSupport = getGLSupport();
 	}
@@ -50,6 +54,116 @@ namespace six {
 		mFlags = 0;
 	}
 
+  void GLRenderSystem::setViewport(Viewport* viewport) {
+		if (viewport == NULL) {
+			mActiveViewport = NULL;
+			setRenderTarget(NULL);
+		} else if (viewport != mActiveViewport || viewport->isUpdated()) {
+			RenderTarget* target;
+			target = viewport->getTarget();
+			setRenderTarget(target);
+			mActiveViewport = viewport;
+
+			GLsizei x, y, w, h;
+			w = viewport->getRealWidth();
+			h = viewport->getRealHeight();
+			x = viewport->getRealLeft();
+			y = viewport->getRealTop();
+			if (!target->requiresTextureFlipping()) {
+				y = target->getHeight() - h - y;
+			}
+			glViewport(x, y, w, h);
+			glScissor(x, y, w, h);
+			viewport->clearUpdatedFlag();
+		}
+  }
+  void GLRenderSystem::clearFrameBuffer(u32 buffers, const Color& color /* = Color::Black */, f32 depth /* = 1.f */, u16 stencil /* = 0 */) {
+
+		bool colorMask = (!mColorWriteR) || (!mColorWriteG) || (!mColorWriteB) || (!mColorWriteA); 
+		GLbitfield flags = 0;
+		if (buffers & FBT_COLOUR) {
+			flags |= GL_COLOR_BUFFER_BIT;
+			if (colorMask) {
+				glColorMask(true, true, true, true);
+			}
+			glClearColor(color.r, color.g, color.b, color.a);
+		}
+		if (buffers & FBT_DEPTH) {
+			flags |= GL_DEPTH_BUFFER_BIT;
+			if (!mDepthWrite) {
+				glDepthMask(GL_TRUE);
+			}
+			glClearDepth(depth);
+		}
+		if (buffers & FBT_STENCIL) {
+			flags |= GL_STENCIL_BUFFER_BIT;
+			glStencilMask(0xFFFFFFFF);
+			glClearStencil(stencil);
+		}
+		GLboolean scissorTestEnabled = glIsEnabled(GL_SCISSOR_TEST);
+		if (!scissorTestEnabled) {
+			glEnable(GL_SCISSOR_TEST);
+		}
+    GLint viewport[4] = {0, 0, 0, 0};
+    GLint scissor[4] = {0, 0, 0, 0};
+		glGetIntegerv(GL_VIEWPORT, viewport);
+		glGetIntegerv(GL_SCISSOR_BOX, scissor);
+		bool scissorBoxDifference = viewport[0] != scissor[0] || viewport[1] != scissor[1] || viewport[2] != scissor[2] || viewport[3] != scissor[3];
+		if (scissorBoxDifference) {
+			glScissor(viewport[0], viewport[1], viewport[2], viewport[3]);
+		}
+
+		glClear(flags);
+		if (scissorBoxDifference) {
+			glScissor(scissor[0], scissor[1], scissor[2], scissor[3]);
+		}
+		if (!scissorTestEnabled) {
+			glDisable(GL_SCISSOR_TEST);
+		}
+		if (!mDepthWrite && (buffers & FBT_DEPTH)) {
+			glDepthMask( GL_FALSE );
+		}
+		if (colorMask && (buffers & FBT_COLOUR)) {
+			glColorMask(mColorWriteR, mColorWriteG, mColorWriteB, mColorWriteA);
+		}
+		if (buffers & FBT_STENCIL) {
+			glStencilMask(mStencilMask);
+		}
+  }
+  void GLRenderSystem::setRenderTarget(RenderTarget* target) {
+    if(mActiveRenderTarget) {
+			//mRTTManager->unbind(mActiveRenderTarget);
+    }
+		mActiveRenderTarget = target;
+		if (target) {
+			GLContext *newContext = NULL;
+			target->getUserData(USERDATA_GLCONTEXT, &newContext);
+			if(newContext && mActiveContext != newContext) {
+				switchContext(newContext);
+			}
+
+			//GLDepthBuffer *depthBuffer = static_cast<GLDepthBuffer*>(target->getDepthBuffer());
+			//if( target->getDepthBufferPool() != DepthBuffer::POOL_NO_DEPTH &&
+			//	(!depthBuffer || depthBuffer->getGLContext() != mCurrentContext ) )
+			//{
+			//	//Depth is automatically managed and there is no depth buffer attached to this RT
+			//	//or the Current context doesn't match the one this Depth buffer was created with
+			//	setDepthBufferFor( target );
+			//}
+
+			// Bind frame buffer object
+			//mRTTManager->bind(target);
+
+			//if (GLEW_EXT_framebuffer_sRGB) {
+			//	if (target->isHardwareGammaEnabled()) {
+			//		glEnable(GL_FRAMEBUFFER_SRGB_EXT);
+			//	} else {
+			//		glDisable(GL_FRAMEBUFFER_SRGB_EXT);
+			//	}
+			//}
+		}
+
+  }
 	//////////////////////////////////////////////////////////////////////////
 	void GLRenderSystem::initialiseContext(RenderWindow* window) {
     mMainContext = NULL;
@@ -71,5 +185,12 @@ namespace six {
     }
   }
   void GLRenderSystem::switchContext(GLContext* context) {
+  }
+  void GLRenderSystem::_setColourBufferWriteEnabled(bool r, bool g, bool b, bool a) {
+    glColorMask(r, g, b, a);
+    mColorWriteR = r;
+    mColorWriteG = g;
+    mColorWriteB = b;
+    mColorWriteA = a;
   }
 }

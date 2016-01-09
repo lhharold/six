@@ -16,7 +16,6 @@ namespace six {
     virtual bool frameStart(const FrameEvent& evt) {return true;}
     virtual bool frameRender(const FrameEvent& evt) {return true;}
     virtual bool frameEnd(const FrameEvent& evt) {return true;}
-	protected:
 	};
 }
 #endif //__SIX_FRAMELISTENER_H_INCLUDE__

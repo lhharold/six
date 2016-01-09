@@ -14,6 +14,7 @@ namespace six {
     virtual void create(const char* name, u32 width, u32 height, bool fullScreen);
     virtual void destroy();
 		virtual void windowMovedOrResized();
+    virtual bool requiresTextureFlipping() {return false;}
 
     void setHidden(bool hidden);
     HWND getWindowHandle() {return mHwnd;}

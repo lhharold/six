@@ -15,8 +15,8 @@ namespace six {
       f32 avgFPS;
       f32 bestFPS;
       f32 worstFPS;
-      u32 bestFrameTime;
-      u32 worstFrameTime;
+      u64 bestFrameTime;
+      u64 worstFrameTime;
       u32 triangleCount;
       u32 batchCount;
     };
@@ -38,14 +38,14 @@ namespace six {
 		virtual void resetStatistics();
 		virtual const FrameStats& getStatistics() const {return mStats;}
 		virtual void swapBuffers() {}
-#if 0
-		virtual u32 getColourDepth(void) const {return mColorDepth;}
+		virtual bool requiresTextureFlipping() = 0;
+    virtual bool isHardwareGammaEnabled() const { return mHwGamma; }
 		virtual Viewport* addViewport(Camera* cam, int zOrder = 0, f32 left = 0.f, f32 top = 0.f, f32 width = 1.f, f32 height = 1.f);
+#if 0
+		virtual u32 getColorDepth(void) const {return mColorDepth;}
 		//virtual void copyContentsToMemory()
 		//virtual void writeContentsToFile();
 		//virtual const char* writeContentsToTimestampedFile()
-		virtual bool requireTextureFlipping() = 0;
-
 #endif
 		virtual u32 getViewportNum() const;
 		virtual Viewport* getViewport(u32 index);
@@ -68,12 +68,19 @@ namespace six {
 		virtual void fireViewportAdded(Viewport* vp);
 		virtual void fireViewportRemoved(Viewport* vp);
 
+    union {
+      struct {
+        u32 mActive : 1;
+        u32 mAutoUpdate : 1;
+        u32 mHwGamma : 1;
+      };
+      u32 flags;
+    };
+
 		String mName;
 		u32 mWidth;
 		u32 mHeight;
-		bool mActive;
 		u8 mPriority;
-		bool mAutoUpdate;
 		FrameStats mStats;
 		u32 mFrameCount;
 		u64 mLastSecond;

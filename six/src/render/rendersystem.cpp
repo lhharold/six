@@ -1,7 +1,7 @@
 #include "core.h"
 
 namespace six {
-	RenderSystem::RenderSystem() {
+  RenderSystem::RenderSystem() : mActiveRenderTarget(NULL) , mActiveViewport(NULL) {
 	}
 
 	RenderSystem::~RenderSystem() {

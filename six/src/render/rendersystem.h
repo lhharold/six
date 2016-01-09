@@ -4,7 +4,7 @@
 #include "renderwindow.h"
 
 namespace six {
-
+  class Viewport;
 	class RenderSystem {
 	public:
 		RenderSystem();
@@ -17,11 +17,18 @@ namespace six {
     virtual void swapBuffer();
 		
 		virtual void attachRenderTarget(RenderTarget& target);
+    virtual Viewport* getViewport() {return mActiveViewport;}
+    virtual void setViewport(Viewport* viewport) = 0;
+    virtual void clearFrameBuffer(u32 buffers, const Color& color = Color::Black, f32 depth = 1.f, u16 stencil = 0) = 0;
+    virtual void _setColourBufferWriteEnabled(bool r, bool g, bool b, bool a) = 0;
+    virtual void setRenderTarget(RenderTarget* target) = 0;
 	protected:
 		typedef Map<String, RenderTarget*> RenderTargetMap;
 		RenderTargetMap mRenderTargets;
 		typedef Mutimap<u8, RenderTarget*> RenderTargetPriorityMap;
     RenderTargetPriorityMap mPriorityRenderTargets;
+    RenderTarget* mActiveRenderTarget;
+    Viewport* mActiveViewport;
 	};
 }
 #endif //__SIX_RENDERSYSTEM_H_INCLUDE__

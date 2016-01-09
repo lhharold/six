@@ -34,6 +34,7 @@ namespace six {
     f32 calcEventTime(u64 t, FrameEventTime type);
 
     Timer* getTimer() {return mTimer;}
+    SceneManager* createSceneManager();
 	protected:
     bool _frameStart();
     bool _frameStart(const FrameEvent& evt);
