@@ -62,7 +62,7 @@ namespace six {
     return ret;
   }
   bool Root::_updateAllRenderTargets() {
-    mRender->update();
+    mRender->update(false);
     bool ret = _frameRender();
     mRender->swapBuffer();
     return ret;
@@ -97,7 +97,7 @@ namespace six {
 	RenderWindow* Root::createWindow(const char* name, s32 width, s32 height, bool fullScreen) {
 		return mRender->createWindow(name, width, height, fullScreen);
 	}
-  void Root::startRun() {
+  void Root::run() {
     ASSERT(mRender != NULL);
     //mRender->_initRenderTargets();
     clearEventTimes();

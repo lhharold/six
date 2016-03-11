@@ -17,7 +17,7 @@ namespace six {
 		: mFlags(0) 
 		, mMainContext(NULL)
 		, mActiveContext(NULL)
-    , mColorWrite(0)
+    , mColorWrite(-1)
     , mDepthWrite(true)
     , mStencilMask(false)
 	{
@@ -75,7 +75,29 @@ namespace six {
 			glViewport(x, y, w, h);
 			glScissor(x, y, w, h);
 			viewport->clearUpdatedFlag();
-		}
+
+      glMatrixMode(GL_PROJECTION);
+      glLoadIdentity();
+
+      const GLdouble pi = 3.1415926535897932384626433832795;
+      GLdouble fW, fH;
+      //fH = tan( (45.f / 2.f) / 180.f * pi ) * 0.01;
+      fH = tan( 45.f / 360.f * pi ) * 0.01;
+      fW = fH * 800.f/600.f;
+      glFrustum( -fW, fW, -fH, fH, 0.01, 100.f);
+
+      glMatrixMode(GL_MODELVIEW);
+      //glLoadIdentity();
+
+#if 0
+      glShadeModel(GL_SMOOTH);
+      glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+      glClearDepth(1.0f);
+      glEnable(GL_DEPTH_TEST);
+      glDepthFunc(GL_LEQUAL);	
+      glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+#endif
+    }
   }
   void GLRenderSystem::clearFrameBuffer(u32 buffers, const Color& color /* = Color::Black */, f32 depth /* = 1.f */, u16 stencil /* = 0 */) {
 
@@ -129,6 +151,22 @@ namespace six {
 		if (buffers & FBT_STENCIL) {
 			glStencilMask(mStencilMask);
 		}
+    glLoadIdentity();
+
+    glTranslatef(-1.5f,0.0f,-6.0f);	
+    glBegin(GL_TRIANGLES);							// 绘制三角形
+    glVertex3f( 0.0f, 1.0f, 0.0f);					// 上顶点
+    glVertex3f(-1.0f,-1.0f, 0.0f);					// 左下
+    glVertex3f( 1.0f,-1.0f, 0.0f);					// 右下
+    glEnd();								// 三角形绘制结束
+    glTranslatef(3.0f,0.0f,0.0f);						// 右移3单位
+    glBegin(GL_QUADS);							//  绘制正方形
+    glVertex3f(-1.0f, 1.0f, 0.0f);					// 左上
+    glVertex3f( 1.0f, 1.0f, 0.0f);					// 右上
+    glVertex3f( 1.0f,-1.0f, 0.0f);					// 左下
+    glVertex3f(-1.0f,-1.0f, 0.0f);					// 右下
+
+    glEnd();
   }
   void GLRenderSystem::setRenderTarget(RenderTarget* target) {
     if(mActiveRenderTarget) {

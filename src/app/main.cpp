@@ -9,7 +9,7 @@ int main(int argn, const char* argv[]) {
   Camera* mainCamera = sceneMgr->createCamera();
   Viewport* vp = window->addViewport(mainCamera);
   vp->setBackgroundColor(Color::Red);
-  root->startRun();
+  root->run();
   return 0;
 }
 #else

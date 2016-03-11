@@ -19,7 +19,7 @@ namespace six {
 		~Root();
 		RenderWindow* startup(bool autoWindow, const char* windowName = "Auto Window");
 		RenderWindow* createWindow(const char* name, s32 width, s32 height, bool fullScreen = false);
-    void startRun();
+    void run();
     bool render();
 		void shutdown();
 

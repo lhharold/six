@@ -1,0 +1,90 @@
+1 tools class
+	math
+	vector2
+	vector3
+	vector4
+	color
+	matrix3
+	matrix4
+	quaternion
+	timer
+	stringutil
+	singleton
+	console
+	Dynlib
+	DynlibMgr
+2 classes
+	archive
+		filesystem
+	IDataStream
+		filstream
+	Plugin
+		--glplugin
+	rendersystem
+		--glrendersystem
+	rendertarget
+		renderwindow
+			--win32window
+	viewport
+	camera
+	scenemanager
+	--glcontext
+		--win32context	
+	--glsupport
+		--glwin32support
+	root 
+
+
+流程
+1 new root
+	new staticpluginloader
+	load static plugin
+		load glplugin
+		install to Root
+			glplugin install
+				new glrendersystem
+					get glsupport
+						new win32 support
+							initializeWGL()
+				set glrendersystem to root
+			glplugin inistalize
+	new Timer
+		win32 timer
+2 root startup
+	glrendersystem startup
+		glsupport start
+			glwin32support start
+		glsupport createwindow
+			create autowindow
+				glrendersystem createwindow
+					glwin32support new window
+            new win32window
+            window create
+              wndclass
+              registerclass
+              createwindowex
+              choose pixel format
+              set pixel format
+              wglcreatecontext
+              wlgsharelists
+              wlgmakecurrent
+              create mHwnd
+              new win32context
+          window which is rendertarget attach to glrendersystem where on rendersystem
+          initialize window context
+            get window context and save to glrendersystem
+                set current context
+                  wglMakeCurrent
+		base class "rendersystem" startup
+	timer reset
+3 root create scenemanager
+  new scenemanager
+4 scenemanager create camera
+  new camera
+5 window add viewport by camera
+  new viewport
+    updateDimension
+    set view to camera
+6 viewport set background color
+7 root run
+8 root destory

@@ -12,8 +12,11 @@ namespace six {
 
     if(vp->getClearEveryFrame()) {
       RenderSystem* renderSystem = Root::get().getRenderSystem();
+      renderSystem->setViewport(vp);
       renderSystem->_setColourBufferWriteEnabled(true, true, true, true);
       renderSystem->clearFrameBuffer(vp->getClearBuffers(), vp->getBackgroundColor(), vp->getDepthClear());
+
+
     }
   }
   Camera* SceneManager::createCamera() {

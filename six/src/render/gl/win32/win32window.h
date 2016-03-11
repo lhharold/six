@@ -15,6 +15,8 @@ namespace six {
     virtual void destroy();
 		virtual void windowMovedOrResized();
     virtual bool requiresTextureFlipping() {return false;}
+		virtual void swapBuffers();
+
 
     void setHidden(bool hidden);
     HWND getWindowHandle() {return mHwnd;}

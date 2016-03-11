@@ -53,6 +53,8 @@ namespace six {
     ProjectionType mProjType;
     f32 mFOVy;
 		mutable f32 mLeft, mRight, mTop, mBottom;
+
+    Matrix4 mProjMatrix;
 	};
 }
 #endif //__SIX_CAMERA_H_INCLUDE__

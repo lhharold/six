@@ -195,4 +195,9 @@ namespace six {
       i->second->updateDimensions();
     }
   }
+
+  void Win32Window::swapBuffers() {
+    if(!mExternal)
+      SwapBuffers(mHDC);
+  }
 }

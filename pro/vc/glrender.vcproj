@@ -195,6 +195,10 @@
 			</File>
 		</Filter>
 		<File
+			RelativePath=".\ClassDiagram1.cd"
+			>
+		</File>
+		<File
 			RelativePath="..\..\six\src\render\gl\dllmain.cpp"
 			>
 		</File>
