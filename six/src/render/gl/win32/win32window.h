@@ -24,6 +24,7 @@ namespace six {
     GLWin32Support* mSupport;
     Win32Context* mContext;
     HWND mHwnd;
+    HINSTANCE mInst;
     HDC mHDC;
     HGLRC	mGlrc;
     bool mClosed;

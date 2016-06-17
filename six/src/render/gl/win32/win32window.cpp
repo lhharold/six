@@ -9,6 +9,7 @@ namespace six {
     : mSupport(support)
     , mContext(NULL)
     , mHwnd(NULL)
+    , mInst(NULL)
     , mHDC(NULL)
     , mGlrc(NULL)
     , mClosed(false)
@@ -35,15 +36,15 @@ namespace six {
   void Win32Window::create(const char* name, u32 width, u32 height, bool fullScreen) {
     if(mHwnd != NULL)
       destroy();
-    mHwnd = NULL;
+
     DWORD dwStyle = WS_VISIBLE | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW;
     DWORD dwStyleEx = 0;
     HWND hParent = NULL;
     HMENU hMenu = NULL;
 #ifdef STATIC_LIB
-    HINSTANCE hInst = NULL;
+    mInst = GetModuleHandle(NULL);
 #else
-    HINSTANCE hInst = GetModuleHandle("RenderSysGL.dll");
+    mInst = GetModuleHandle("RenderSysGL.dll");
 #endif
 
     mName = name;
@@ -60,7 +61,7 @@ namespace six {
     wcex.lpfnWndProc   = WindowEvent::_WndProc;
     wcex.cbClsExtra		 = 0;
     wcex.cbWndExtra		 = 0;
-    wcex.hInstance		 = hInst;
+    wcex.hInstance		 = mInst;
     wcex.hIcon			   = LoadIcon(NULL, IDI_APPLICATION);
     wcex.hCursor		   = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
@@ -69,26 +70,40 @@ namespace six {
     wcex.hIconSm       = NULL;
     RegisterClassEx(&wcex);
     mHwnd = CreateWindowEx(dwStyleEx, "OpenGLWin32Window", name, dwStyle, mLeft, mTop,
-                           mWidth, mHeight, hParent, hMenu, hInst, this);
+                           mWidth, mHeight, hParent, hMenu, mInst, this);
 #else
-    WNDCLASS wc = {CS_OWNDC, WindowEvent::_WndProc, 0, 0, hInst,
-				LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW),
-				(HBRUSH)GetStockObject(BLACK_BRUSH), NULL, "GLWin32Window" };
-			RegisterClass(&wc);
-			mHwnd = CreateWindowEx(dwStyleEx, "GLWin32Window", name,
-				dwStyle, mLeft, mTop, mWidth, mHeight, hParent, hMenu, hInst, this);
+    WNDCLASS wc = {CS_HREDRAW | CS_VREDRAW | CS_OWNDC, WindowEvent::_WndProc, 0, 0, mInst,
+      LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW),
+      (HBRUSH)GetStockObject(BLACK_BRUSH), NULL, "GLWin32Window" };
+    RegisterClass(&wc);
+
+#if 1
+    RECT wndRect;
+    wndRect.left = (long)200;
+    wndRect.right = wndRect.left + (long)mWidth;
+    wndRect.top = (long)100;
+    wndRect.bottom = wndRect.top + (long)mHeight;
+    AdjustWindowRectEx(&wndRect, dwStyle, FALSE, dwStyleEx);
+    mLeft = wndRect.left;
+    mTop = wndRect.top;
+    mWidth = wndRect.right - wndRect.left;
+    mWidth = wndRect.bottom - wndRect.top;
+#endif
+    mHwnd = CreateWindowEx(dwStyleEx, "GLWin32Window", name,
+      dwStyle, mLeft, mTop, mWidth, mHeight, hParent, hMenu, mInst, this);
 #endif
 
-    HDC oldHdc = wglGetCurrentDC();
-    HGLRC oldContext = wglGetCurrentContext();
-    RECT rc;
+#if 0
     GetWindowRect(mHwnd, &rc);
     mLeft = rc.left;
     mTop = rc.top;
     GetClientRect(mHwnd, &rc);
     mWidth = rc.right;
     mHeight = rc.bottom;
+#endif
 
+    HDC oldHdc = wglGetCurrentDC();
+    HGLRC oldContext = wglGetCurrentContext();
     mHDC = GetDC(mHwnd);
 #if 1
     PIXELFORMATDESCRIPTOR pfd = {
@@ -105,7 +120,7 @@ namespace six {
       0,				// No Accumulation Buffer
       0, 0, 0, 0,			// Accumulation Bits Ignored
       24,				// Z-Buffer (Depth Buffer)
-      /*stencilBuffer ? 1 :*/ 0,		// Stencil Buffer Depth
+      1,		// Stencil Buffer Depth
       0,				// No Auxiliary Buffer
       PFD_MAIN_PLANE,			// Main Drawing Layer
       0,				// Reserved
@@ -145,6 +160,8 @@ namespace six {
     mContext = NEW Win32Context(mHDC, mGlrc);
     mActive = true;
     setHidden(false);
+    SetForegroundWindow(mHwnd);
+    SetFocus(mHwnd);
   }
 
   void Win32Window::setHidden(bool hidden) {
@@ -168,13 +185,18 @@ namespace six {
     if(!mFullScreen) {
       //ChangeDisplaySettingsEx()
     }
-    DestroyWindow(mHwnd);
     //if the wnd is external remember to ReleaseDC(mHWnd, mHDC);
+    ReleaseDC(mHwnd, mHDC);
+
+    DestroyWindow(mHwnd);
+
+		UnregisterClass("GLWin32Window", mInst);
 
     mActive = false;
     mClosed = true;
-    mHDC = 0;
-    mHwnd = 0;
+    mHDC = NULL;
+    mHwnd = NULL;
+    mInst = NULL;
   }
 
   void Win32Window::windowMovedOrResized() {

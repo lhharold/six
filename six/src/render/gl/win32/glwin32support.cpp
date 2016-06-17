@@ -11,8 +11,8 @@ namespace six {
 	}
 	RenderWindow* GLWin32Support::createWindow(GLRenderSystem* renderSystem, bool autoWindow, const char* windowName){
 		if(autoWindow) {
-			int width = 1024;
-			int height = 768;
+			int width = 800;
+			int height = 600;
 			bool fullScreen = false;
 			return renderSystem->createWindow(windowName, width, height, fullScreen);
 		}
