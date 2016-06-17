@@ -87,7 +87,7 @@ namespace six {
       glFrustum( -fW, fW, -fH, fH, 0.01, 100.f);
 
       glMatrixMode(GL_MODELVIEW);
-      //glLoadIdentity();
+      glLoadIdentity();
 
 #if 0
       glShadeModel(GL_SMOOTH);
@@ -100,7 +100,6 @@ namespace six {
     }
   }
   void GLRenderSystem::clearFrameBuffer(u32 buffers, const Color& color /* = Color::Black */, f32 depth /* = 1.f */, u16 stencil /* = 0 */) {
-
 		bool colorMask = (!mColorWriteR) || (!mColorWriteG) || (!mColorWriteB) || (!mColorWriteA); 
 		GLbitfield flags = 0;
 		if (buffers & FBT_COLOUR) {
@@ -151,8 +150,8 @@ namespace six {
 		if (buffers & FBT_STENCIL) {
 			glStencilMask(mStencilMask);
 		}
-    glLoadIdentity();
 
+    glLoadIdentity();
     glTranslatef(-1.5f,0.0f,-6.0f);	
     glBegin(GL_TRIANGLES);							// 绘制三角形
     glVertex3f( 0.0f, 1.0f, 0.0f);					// 上顶点
@@ -165,7 +164,6 @@ namespace six {
     glVertex3f( 1.0f, 1.0f, 0.0f);					// 右上
     glVertex3f( 1.0f,-1.0f, 0.0f);					// 左下
     glVertex3f(-1.0f,-1.0f, 0.0f);					// 右下
-
     glEnd();
   }
   void GLRenderSystem::setRenderTarget(RenderTarget* target) {
