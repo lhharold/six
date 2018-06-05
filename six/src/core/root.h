@@ -14,6 +14,7 @@ namespace six {
   };
   class StaticPluginLoader;
 	class Root : public Singleton<Root> {
+  DECLARE_STATIC_LOG();
 	public:
 		Root();
 		~Root();
@@ -35,6 +36,7 @@ namespace six {
 
     Timer* getTimer() {return mTimer;}
     SceneManager* createSceneManager();
+    void destorySceneManager(SceneManager* sceneMgr);
 	protected:
     bool _frameStart();
     bool _frameStart(const FrameEvent& evt);
@@ -60,7 +62,7 @@ namespace six {
     f32 mAvgFrameTime;
     f32 mFrameTime;
     u32 mFrameCount;
-#ifdef STATIC_LIB
+#ifdef _STATIC_LIB
     StaticPluginLoader* mStaticPluginLoader;
 #endif
 

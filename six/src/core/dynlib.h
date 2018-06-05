@@ -3,6 +3,7 @@
 
 namespace six {
 	class DynLib {
+  DECLARE_STATIC_LOG();
 	public:
 		DynLib(const char* libName);
 		virtual ~DynLib();

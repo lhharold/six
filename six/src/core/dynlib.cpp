@@ -1,6 +1,7 @@
 #include "core.h"
 
 namespace six {
+  DEFINE_STATIC_LOG(DynLib);
 	DynLib::DynLib(const char* libName)
 		: mLibName(libName)
 	{

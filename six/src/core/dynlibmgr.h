@@ -3,6 +3,7 @@
 
 namespace six {
 	class DynLibMgr : public Singleton<DynLibMgr> {
+  DECLARE_STATIC_LOG();
 	public:
 		DynLibMgr();
 		virtual ~DynLibMgr();

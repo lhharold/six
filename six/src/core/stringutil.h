@@ -3,6 +3,57 @@
 
 namespace six {
 
+  inline bool STR_EMPTY(const char* value) {
+    return value == NULL || value[0] == 0;
+  }
+	inline char CHR_LOW(char c) {
+		return (c >= 'A' && c <= 'Z') ? c + ('a' - 'A') : c;
+	}
+	inline char CHR_LOWED(char c) {
+		if (c >= 'A' && c <= 'Z')
+			c += 'a' - 'A';
+		return c;
+	}
+	inline bool IS_LETTER(char c) {
+		return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
+	}
+	inline bool IS_NUMBER(char c) {
+		return c >= '0' && c <= '9';
+	}
+	inline u32 BKDRHash(const char* p) {
+		u32 seed = 131; 
+		u32 hash = 0;
+		while (*p) {
+			hash = hash * seed + (*p++);
+		}
+		return (hash & 0x7FFFFFFF);
+	}
+	inline u32 BKDRHash(const char* p, char sp) {
+		u32 seed = 131; 
+		u32 hash = 0;
+		while (*p && *p != sp) {
+			hash = hash * seed + *p++;
+		}
+		return (hash & 0x7FFFFFFF);
+	}
+	inline static u32 BKDRHashN(const char* p, const char* e) {
+		u32 seed = 131; 
+		u32 hash = 0;
+		while (p != e) {
+			hash = hash * seed + (*p++);
+		}
+		return (hash & 0x7FFFFFFF);
+	}
+	inline u32 BKDRHashL(const char* p) {
+		u32 seed = 131; 
+		u32 hash = 0;
+		while (*p) {
+			hash = hash * seed + CHR_LOW(*p++);
+		}
+		return (hash & 0x7FFFFFFF);
+	}
+# define Hash(x) BKDRHash(x)
+
   class StringUtil {
   public:
     static void trim(String& str, bool left = true, bool right = true);

@@ -19,6 +19,10 @@ namespace six {
     virtual void _setColourBufferWriteEnabled(bool r, bool g, bool b, bool a);
     virtual void setRenderTarget(RenderTarget* target);
 
+    virtual void setVertexData(void* data, u32 stride, const int* offsets, int vertexDeclare, u32 vbo = 0);
+    virtual void useMaterial(Material* mtl);
+    virtual void renderIndies();
+
     void unregisterContext(GLContext *context);
 	protected:
 		void initialiseContext(RenderWindow* window);

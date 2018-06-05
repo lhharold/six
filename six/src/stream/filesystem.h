@@ -7,7 +7,7 @@ namespace six {
 	class FileSystem : public Archive {
 	public:
 		FileSystem(const char* name);
-		virtual  ~FileSystem();
+		virtual ~FileSystem();
 
 		virtual bool isCaseSensitive() const;
 		virtual void load();

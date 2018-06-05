@@ -1,20 +1,129 @@
 #include "six.h"
+#include <iostream>
+#include <Windows.h>
 using namespace six;
 
 #if 1
+#include "sample.h"
+int main(int argn, const char* argv[]) {
+  Sample sample;
+  sample.startup();
+  sample.run();
+  sample.shutdown();
+  return 0;
+}
+#endif
+
+#if 0 //background test
 int main(int argn, const char* argv[]) {
   Root* root = NEW Root();
   RenderWindow* window = root->startup(true);
   SceneManager* sceneMgr = root->createSceneManager();
-  Camera* mainCamera = sceneMgr->createCamera();
+  Camera* mainCamera = sceneMgr->createCamera("MainCamera");
   Viewport* vp = window->addViewport(mainCamera);
   vp->setBackgroundColor(Color::Red);
   root->run();
   return 0;
 }
-#else
-int main(int argn, const char* argv[]) {
+#endif
 
+#if 0 //log test
+class Demo {
+  DECLARE_STATIC_LOG();
+public:
+  Demo();
+  virtual ~Demo();
+public:
+  void TestIt(int i, int j);
+};
+
+DEFINE_STATIC_LOG(Demo);
+Demo::Demo() {
+    LogInfo("");
+}
+Demo::~Demo() {
+    LogInfo("");
+}
+void Demo::TestIt(int i, int j) {
+    LogInfo("i=%d, j=%d", i, j);
+}
+int main() {
+  InitLog4cpp("log.ini");
+  Demo demo;
+  demo.TestIt(12, 23);
+  ReleaseLog4cpp();
+}
+#endif
+#if 0 //xml read new
+int main() {
+  const char* fileName = "test.xml";
+  Sixml fxml;
+  fxml.load(fileName);
+
+  void* root = fxml.getRoot();
+  if(root) {
+    void* file = fxml.localItem(root, "FileList\\File");
+    if(file) {
+      std::cout << fxml.getText(file) << std::endl;
+
+      std::cout << fxml.getAttribute(file, "AssemblyName") << std::endl;
+      std::cout << fxml.getAttribute(file, "Version") << std::endl;
+      std::cout << fxml.getAttribute(file, "PublicKeyToken") << std::endl;
+      std::cout << fxml.getAttribute(file, "Culture") << std::endl;
+      std::cout << fxml.getAttribute(file, "ProcessorArchitecture") << std::endl;
+      std::cout << fxml.getAttribute(file, "InGAC") << std::endl;
+      std::cout << fxml.getAttribute(file, "orth") << std::endl;
+    }
+  }
+  return 0;
+}
+#endif
+#if 0 //write xml old
+int main() {
+  Sixml fxml;
+  fxml.addDocInfo("1.0", "utf-8");
+  fxml.addNode("a", "1adfadafdsfafdaf");
+  fxml.addAttr("val1", "11");
+  fxml.addNode("b", "2");
+  fxml.addAttr("val2", "22");
+  fxml.endNode();
+  fxml.addNode("c", "3");
+  fxml.addAttr("val3", "33");
+  fxml.endNode();
+  fxml.endNode();
+  fxml.addNode("d", "4");
+  fxml.addAttr("val4", "44");
+  fxml.endNode();
+  fxml.save("config.xml");
+  return 0;
+}
+#endif
+#if 0  //read xml old
+int main() {
+  Sixml fxml("test.xml");
+  fxml.goRoot();
+  std::cout << fxml.nodeName() << std::endl;
+  if(fxml.goChild()) {
+    std::cout << fxml.nodeName() << " ";
+    while(fxml.nextAttr()) 
+      std::cout << fxml.attrName() << "=" << fxml.attrValue() << " ";
+    std::cout << std::endl;
+
+    if(fxml.goChild()) {
+      do {
+        std::cout << fxml.nodeName() << " ";
+        while(fxml.nextAttr()) 
+          std::cout << fxml.attrName() << "=" << fxml.attrValue() << " ";
+        std::cout << std::endl;
+      } while(fxml.nextSibling());
+      fxml.goParent();
+    }
+  }
+  return 0;
+}
+#endif
+#if 0 //file stream read
+int main() {
 	FileSystem fileSystem(".");
 	IDataStream* vsStream = fileSystem.open("default_vs.glsl");
 	IDataStream* psStream = fileSystem.open("default_ps.glsl");
@@ -36,7 +145,7 @@ int main(int argn, const char* argv[]) {
 }
 #endif
 
-#if 0
+#if 0 
 #include <windows.h>
 
 #define MAX_LOADSTRING 100

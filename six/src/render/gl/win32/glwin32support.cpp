@@ -34,7 +34,7 @@ namespace six {
 	void GLWin32Support::initializeWGL() {
 #if 0
 		LPCSTR dummyText = "WglDummy";
-#ifdef STATIC_LIB
+#ifdef _STATIC_LIB
 		HINSTANCE hinst = GetModuleHandle(NULL);
 #else
 		HINSTANCE hinst = GetModuleHandle("RenderSystem_GL.dll");

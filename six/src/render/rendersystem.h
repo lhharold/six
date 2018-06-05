@@ -22,6 +22,10 @@ namespace six {
     virtual void clearFrameBuffer(u32 buffers, const Color& color = Color::Black, f32 depth = 1.f, u16 stencil = 0) = 0;
     virtual void _setColourBufferWriteEnabled(bool r, bool g, bool b, bool a) = 0;
     virtual void setRenderTarget(RenderTarget* target) = 0;
+
+    virtual void setVertexData(void* data, u32 stride, const int* offsets, int vertexDeclare, u32 vbo = 0) = 0;
+    virtual void useMaterial(Material* mtl) = 0;
+    virtual void renderIndies() = 0;
 	protected:
 		typedef Map<String, RenderTarget*> RenderTargetMap;
 		RenderTargetMap mRenderTargets;

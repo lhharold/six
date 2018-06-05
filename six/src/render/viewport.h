@@ -6,6 +6,7 @@ namespace six {
   class Camera;
   class RenderTarget;
 	class Viewport {
+  DECLARE_STATIC_LOG();
 	public:
 		class Listener {
 		public:

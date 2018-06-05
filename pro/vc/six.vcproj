@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render;..\..\six\src\render\gl;..\..\six\src\platform;..\..\six\src\platform\win32"
+				AdditionalIncludeDirectories="..\..\six\src;..\..\six\src\core;..\..\six\src\stream;..\..\six\src\utility;..\..\six\src\render;..\..\six\src\render\gl;..\..\six\src\platform;..\..\six\src\platform\win32;..\..\six\src\tools\;..\..\six\src\tools\rapidxml;..\..\six\src\tools\nedmalloc;..\..\six\src\thread;..\..\six\tools\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -220,6 +220,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\atomic.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\color.cpp"
 				>
 			</File>
@@ -298,6 +302,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\material.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\material.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\matrix3.cpp"
 				>
 			</File>
@@ -328,6 +340,34 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\memoryallocator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\memorynedpooling.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\memorynedpooling.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\memorytracker.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\memorytracker.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\mesh.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\plugin.h"
 				>
 				<FileConfiguration
@@ -354,6 +394,22 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\resource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\resource.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\resourcemanager.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\resourcemanager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\root.cpp"
 				>
 			</File>
@@ -367,6 +423,14 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\scriptloader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\shareptr.h"
+				>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\singleton.h"
@@ -384,6 +448,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\..\six\src\core\stringinterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\stringinterface.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\six\src\core\stringutil.cpp"
 				>
 			</File>
@@ -397,6 +469,18 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\texture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\texture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\util.h"
+				>
 			</File>
 			<File
 				RelativePath="..\..\six\src\core\vector2.cpp"
@@ -442,6 +526,14 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\vertexindexdata.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\core\vertexindexdata.h"
+				>
 			</File>
 		</Filter>
 		<Filter
@@ -491,6 +583,14 @@
 			</File>
 			<File
 				RelativePath="..\..\six\src\render\framelistener.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\frustum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\render\frustum.h"
 				>
 			</File>
 			<File
@@ -600,6 +700,74 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="tools"
+			>
+			<File
+				RelativePath="..\..\six\src\tools\logtracer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\tools\sixlog.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\tools\sixlog.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\tools\sixml.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\six\src\tools\sixml.h"
+				>
+			</File>
+			<Filter
+				Name="rapidxml"
+				>
+				<File
+					RelativePath="..\..\six\src\tools\rapidxml\rapidxml.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\tools\rapidxml\rapidxml_iterators.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\tools\rapidxml\rapidxml_print.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\tools\rapidxml\rapidxml_utils.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="nedmalloc"
+				>
+				<File
+					RelativePath="..\..\six\src\tools\nedmalloc\malloc.c.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\tools\nedmalloc\nedmalloc.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\six\src\tools\nedmalloc\nedmalloc.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="thread"
+			>
+			<File
+				RelativePath="..\..\six\src\thread\threaddef.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\six\src\buildsetting.h"

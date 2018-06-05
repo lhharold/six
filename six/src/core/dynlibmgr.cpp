@@ -2,6 +2,7 @@
 
 namespace six {
 	template<> DynLibMgr* Singleton<DynLibMgr>::sInstance = NULL;
+  DEFINE_STATIC_LOG(DynLibMgr);
 	DynLibMgr::DynLibMgr() {
 
 	}

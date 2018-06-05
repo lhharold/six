@@ -13,16 +13,16 @@ namespace six {
     static const Matrix4 Zero;
     static const Matrix4 Identity;
     union {
-      float mm[4][4];
-      float m[16];
+      f32 mm[4][4];
+      f32 m[16];
     };
 
     Matrix4() {memset(m, 0, sizeof(*this));}
-    explicit Matrix4(float val[16]) {memcpy(m, val, sizeof(*this));}
-    Matrix4(float m00, float m01, float m02, float m03,
-      float m10, float m11, float m12, float m13,
-      float m20, float m21, float m22, float m23,
-      float m30, float m31, float m32, float m33) {
+    explicit Matrix4(f32 val[16]) {memcpy(m, val, sizeof(*this));}
+    Matrix4(f32 m00, f32 m01, f32 m02, f32 m03,
+      f32 m10, f32 m11, f32 m12, f32 m13,
+      f32 m20, f32 m21, f32 m22, f32 m23,
+      f32 m30, f32 m31, f32 m32, f32 m33) {
         m[I00] = m00; m[I01] = m01; m[I02] = m02; m[I03] = m03;
         m[I10] = m10; m[I11] = m11; m[I12] = m12; m[I13] = m13;
         m[I20] = m20; m[I21] = m21; m[I22] = m22; m[I23] = m23;
@@ -30,8 +30,8 @@ namespace six {
     }
     Matrix4(const Matrix4& mat) {memcpy(m, mat.m, sizeof(*this));}
 
-    float operator[] (unsigned char i) const {return m[i];}
-    float& operator[] (unsigned char i) {return m[i];}
+    f32 operator[] (unsigned char i) const {return m[i];}
+    f32& operator[] (unsigned char i) {return m[i];}
     const Matrix4& operator = (const Matrix4& mat) {memcpy(m, mat.m, sizeof(*this)); return *this;}
     inline bool operator == (const Matrix4& mat) const;
     bool operator != (const Matrix4& mat) const {return !operator ==(mat);}
@@ -40,19 +40,19 @@ namespace six {
     const Matrix4& operator += (const Matrix4& mat) {return (*this = *this+mat);}
     inline Matrix4 operator - (const Matrix4& mat) const;
     const Matrix4& operator -= (const Matrix4& mat) {return (*this = *this-mat);}
-    inline Matrix4 operator * (float val)const;
-    const Matrix4& operator *= (float val) {return (*this = *this*val);}
+    inline Matrix4 operator * (f32 val)const;
+    const Matrix4& operator *= (f32 val) {return (*this = *this*val);}
     inline Vector3f operator * (const Vector3f& vec);
     inline Matrix4 operator * (const Matrix4& mat);
     const Matrix4& operator *= (const Matrix4& mat) {return (*this = *this*mat);}
 
-    friend Matrix4 operator * (float val, const Matrix4& mat);
+    friend Matrix4 operator * (f32 val, const Matrix4& mat);
     friend Vector3f operator * (const Vector3f& vec, const Matrix4& mat);
     void swap(Matrix4& mat);
 
     void makeIdentity() {memset(m, 0, sizeof(*this));}
     void transpose() {
-      float t;
+      f32 t;
       t = m[I01]; m[I01] = m[I10]; m[I10] = t;
       t = m[I02]; m[I02] = m[I20]; m[I20] = t;
       t = m[I03]; m[I03] = m[I30]; m[I30] = t;
@@ -60,6 +60,7 @@ namespace six {
       t = m[I13]; m[I13] = m[I31]; m[I31] = t;
       t = m[I23]; m[I23] = m[I32]; m[I32] = t;
     };
+    Matrix4 inverse();
   };
 
   inline bool Matrix4::operator == (const Matrix4& mat) const {
@@ -83,7 +84,7 @@ namespace six {
     return r;
   }
 
-  inline Matrix4 Matrix4::operator * (float val)const {
+  inline Matrix4 Matrix4::operator * (f32 val)const {
     Matrix4 r;
     for(int i = 0; i != 16; ++i)
       r.m[i] = val*m[i];

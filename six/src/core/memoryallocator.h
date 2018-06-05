@@ -1,0 +1,8 @@
+#ifndef __SIX_MEMORYALLOCATOR_H_INCLUDE__
+#define __SIX_MEMORYALLOCATOR_H_INCLUDE__
+
+namespace six {
+
+}
+
+#endif //__SIX_MEMORYALLOCATOR_H_INCLUDE__

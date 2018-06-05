@@ -41,7 +41,7 @@ namespace six {
     DWORD dwStyleEx = 0;
     HWND hParent = NULL;
     HMENU hMenu = NULL;
-#ifdef STATIC_LIB
+#ifdef _STATIC_LIB
     mInst = GetModuleHandle(NULL);
 #else
     mInst = GetModuleHandle("RenderSysGL.dll");

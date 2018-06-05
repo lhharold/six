@@ -1,10 +1,11 @@
 #include "core.h"
+#include "camera.h"
 #include "viewport.h"
 #include "rendertarget.h"
-#include "camera.h"
 #include "root.h"
 
 namespace six {
+  DEFINE_STATIC_LOG(Viewport);
   Viewport::Viewport(Camera* camera, RenderTarget* target, f32 left, f32 top, f32 width, f32 height, int zOrder) 
     : flags(-1)
     , mCamera(camera)

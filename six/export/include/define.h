@@ -37,6 +37,7 @@
 #include <set>
 #include <deque>
 #include <map>
+#include <list>
 
 using std::string;
 using std::vector;
@@ -44,6 +45,7 @@ using std::map;
 using std::multimap;
 using std::set;
 using std::deque;
+using std::list;
 
 namespace six {
 	typedef unsigned char		u8;
@@ -62,6 +64,27 @@ namespace six {
 	typedef float				    f32;
 	typedef double				  f64;
 
+	static const u32 U32_MAX_VALUE = 0xffffffff;
+	static const u32 U32_MIN_VALUE = 0;
+
+	static const s32 S32_MAX_VALUE =  0x7FFFFFFF;
+	static const s32 S32_MIN_VALUE = -S32_MAX_VALUE-1;
+
+	static const u16 U16_MAX_VALUE = 0xffff;
+	static const u16 U16_MIN_VALUE = 0;
+
+	static const s16 S16_MAX_VALUE =  0x7FFF;
+	static const s16 S16_MIN_VALUE = -S16_MAX_VALUE-1;
+
+	static const u8	 U8_MAX_VALUE  =  0xff;
+	static const u8  U8_MIN_VALUE  =  0;
+
+	static const s8  S8_MAX_VALUE  =  0x7f;
+	static const s8  S8_MIN_VALUE  = -S8_MAX_VALUE-1;
+
+	static const f32 F32_MAX_VALUE = 3.402823466e+38F;
+	static const f32 F32_MIN_VALUE = 1.192092896e-07F;
+
 	typedef string String;
 
   template<typename T>
@@ -74,6 +97,8 @@ namespace six {
   class Set : public std::set<T> {};
   template<typename T>
   class Deque : public std::deque<T> {};
+  template<typename T>
+  class List : public std::list<T> {};
 
 	#define NEW new
 	#define SAFE_DEL(p)			do{ if (p) { delete (p); (p) = NULL; } }while(0)
@@ -81,6 +106,7 @@ namespace six {
 
 	#define PRINTF printf
 	#define SSCANF sscanf
+  #define SPRINTF sprintf
 
 	#define MEMCPY memcpy
 	#define MEMSET memset
@@ -88,6 +114,8 @@ namespace six {
 	#define STRCPY strcpy
 	#define STRCHR strchr
 	#define STRSTR strstr
+  #define STRCMP strcmp
+  #define STRCAT strcat
 
 	#define FOPEN	fopen
 	#define FREAD	fread

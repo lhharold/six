@@ -4,12 +4,15 @@
 namespace six {
   class Camera;
 	class SceneManager {
+  DECLARE_STATIC_LOG();
 	public:
     SceneManager();
-    ~SceneManager();
+    virtual ~SceneManager();
+    void update();
 
     virtual void renderScene(Camera* camera, Viewport* vp, bool includeOverlays);
-    virtual Camera* createCamera();
+    virtual Camera* createCamera(const char* name);
+    virtual void clearScene();
 	};
 }
 #endif //__SIX_SCENEMANAGER_H_INCLUDE__

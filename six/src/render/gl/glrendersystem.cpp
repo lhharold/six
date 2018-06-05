@@ -76,13 +76,12 @@ namespace six {
 			glScissor(x, y, w, h);
 			viewport->clearUpdatedFlag();
 
+      //////////////////////////////////////////////////////////////////////////
       glMatrixMode(GL_PROJECTION);
       glLoadIdentity();
-
-      const GLdouble pi = 3.1415926535897932384626433832795;
       GLdouble fW, fH;
-      //fH = tan( (45.f / 2.f) / 180.f * pi ) * 0.01;
-      fH = tan( 45.f / 360.f * pi ) * 0.01;
+      //fH = tan( (45.f / 2.f) / 180.f * Math::pi ) * 0.01;
+      fH = tan( 45.f / 360.f * Math::pi ) * 0.01;
       fW = fH * 800.f/600.f;
       glFrustum( -fW, fW, -fH, fH, 0.01, 100.f);
 
@@ -228,5 +227,11 @@ namespace six {
     mColorWriteG = g;
     mColorWriteB = b;
     mColorWriteA = a;
+  }
+  void GLRenderSystem::setVertexData(void* data, u32 stride, const int* offsets, int vertexDeclare, u32 vbo) {
+  }
+  void GLRenderSystem::useMaterial(Material* mtl) {
+  }
+  void GLRenderSystem::renderIndies() {
   }
 }

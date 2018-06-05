@@ -1,15 +1,12 @@
 #ifndef __SIX_CAMERA_H_INCLUDE__
 #define __SIX_CAMERA_H_INCLUDE__
 
+#include "frustum.h"
 namespace six {
-  enum ProjectionType {
-    PT_ORTHOGRAPHIC = 0,
-    PT_PERSPECTIVE
-  };
-
   class Viewport;
   class SceneManager;
-	class Camera {
+  class Camera : public Frustum {
+  DECLARE_STATIC_LOG();
 	public:
 		class Listener {
 		public:
@@ -19,8 +16,8 @@ namespace six {
 			virtual void cameraPostRenderScene(Camera* cam) { (void)cam; }
 			virtual void cameraDestroyed(Camera* cam) { (void)cam; }
 		};
-    Camera(SceneManager* sm);
-    ~Camera();
+    Camera(const char* name, SceneManager* sm);
+    virtual ~Camera();
 
     void notifyViewport(Viewport* viewport) {mViewport = viewport;}
     Viewport* getViewport() {return mViewport;}
@@ -29,6 +26,10 @@ namespace six {
     u32 getRenderFacesNum() {return mVisFacesLastRender;}
     u32 getRenderBatchesNum() {return mVisBatchesLastRender;}
     void renderScene(Viewport* viewport, bool includeOverlays);
+
+    void makeViewMatrix(const Vector3f& pos, const Vector3f& dir, const Vector3f& up);
+    void setProjection(f32 fovy, f32 aspect, f32 nearClip, f32 farClip);
+    void setOrtho(f32 left, f32 right, f32 bottom, f32 top, f32 nearClip, f32 farClip);
   protected:
     Viewport* mViewport;
     SceneManager* mSceneMgr;
@@ -43,18 +44,6 @@ namespace six {
     };
 		typedef Vector<Listener*> ListenerList;
 		ListenerList mListeners;
-
-    //virtual 
-  public:
-    virtual void setAspectRatio(f32 ratio) {mAspectRatio = ratio;}
-    virtual f32 getAspectRatio() {return mAspectRatio;}
-  protected:
-    f32 mAspectRatio;
-    ProjectionType mProjType;
-    f32 mFOVy;
-		mutable f32 mLeft, mRight, mTop, mBottom;
-
-    Matrix4 mProjMatrix;
 	};
 }
 #endif //__SIX_CAMERA_H_INCLUDE__

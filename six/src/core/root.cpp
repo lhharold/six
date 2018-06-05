@@ -68,6 +68,7 @@ namespace six {
     return ret;
   }
   //////////////////////////////////////////////////////////////////////////
+  DEFINE_STATIC_LOG(Root);
 	Root::Root() 
 		: mRender(NULL)
 		, mAutoWindow(NULL)
@@ -76,18 +77,20 @@ namespace six {
     , mAvgFrameTime(0.f)
     , mFrameCount(0)
 	{
-#ifdef STATIC_LIB
+    InitLog4cpp("log.ini");
+#ifdef _STATIC_LIB
     mStaticPluginLoader = NEW StaticPluginLoader();
     mStaticPluginLoader->load();
 #endif
     mTimer = NEW Timer();
 	}
 	Root::~Root() {
-#ifdef STATIC_LIB
+#ifdef _STATIC_LIB
     mStaticPluginLoader->unload();
     SAFE_DEL(mStaticPluginLoader);
 #endif
     SAFE_DEL(mTimer);
+    ReleaseLog4cpp();
 	}
 	RenderWindow* Root::startup(bool autoWindow, const char* windowName) {
 		mAutoWindow = mRender->startup(autoWindow, windowName);
@@ -175,5 +178,8 @@ namespace six {
 	}
   SceneManager* Root::createSceneManager() {
     return NEW SceneManager();
+  }
+  void Root::destorySceneManager(SceneManager* sceneMgr) {
+    SAFE_DEL(sceneMgr);
   }
 }
